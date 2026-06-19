@@ -925,11 +925,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // LÓGICA DE LA SECCIÓN DE LECTURA Y PLANES DE LECTURA
   // ==========================================================================
 
-  // 1. Elementos del DOM de Lectura
+  // 1. Elementos del DOM de Lectura y Historias
   const tabDevotional = document.getElementById('tab-devotional');
   const tabLectura = document.getElementById('tab-lectura');
+  const tabHistorias = document.getElementById('tab-historias');
   const sectionDevotional = document.getElementById('section-devotional');
   const sectionLectura = document.getElementById('section-lectura');
+  const sectionHistorias = document.getElementById('section-historias');
+
+  const btnCloseStories = document.getElementById('btn-close-stories');
+  const filterStoryAll = document.getElementById('filter-story-all');
+  const filterStoryAntiguo = document.getElementById('filter-story-antiguo');
+  const filterStoryNuevo = document.getElementById('filter-story-nuevo');
+  const storiesGridContainer = document.getElementById('stories-grid-container');
 
   const readingHomeView = document.getElementById('reading-home-view');
   const readingBooksView = document.getElementById('reading-books-view');
@@ -1054,20 +1062,34 @@ document.addEventListener('DOMContentLoaded', () => {
     switchMainTab('lectura');
   });
 
+  tabHistorias.addEventListener('click', () => {
+    switchMainTab('historias');
+  });
+
   function switchMainTab(tabId) {
+    // Restablecer todas las pestañas activas
+    tabDevotional.classList.remove('active');
+    tabLectura.classList.remove('active');
+    tabHistorias.classList.remove('active');
+    
+    // Ocultar todas las secciones principales
+    sectionDevotional.style.display = 'none';
+    sectionLectura.style.display = 'none';
+    sectionHistorias.style.display = 'none';
+
     if (tabId === 'devotional') {
       tabDevotional.classList.add('active');
-      tabLectura.classList.remove('active');
       sectionDevotional.style.display = 'block';
-      sectionLectura.style.display = 'none';
-    } else {
-      tabDevotional.classList.remove('active');
+    } else if (tabId === 'lectura') {
       tabLectura.classList.add('active');
-      sectionDevotional.style.display = 'none';
       sectionLectura.style.display = 'block';
-      
       // Al cambiar a lectura, actualizamos el progreso en la cuadrícula de planes
       updatePlansGridProgress();
+    } else if (tabId === 'historias') {
+      tabHistorias.classList.add('active');
+      sectionHistorias.style.display = 'block';
+      // Cargar e inicializar historias
+      renderStories('all');
     }
   }
 
@@ -1331,6 +1353,8 @@ document.addEventListener('DOMContentLoaded', () => {
   btnBackToChapters.addEventListener('click', () => {
     if (returnToViewAfterReader === 'plan') {
       renderPlanDetailView(currentPlanSelected);
+    } else if (returnToViewAfterReader === 'stories') {
+      switchMainTab('historias');
     } else {
       openBook(currentBookSelected);
     }
@@ -1667,5 +1691,183 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Ejecución inicial de actualizar planes
   updatePlansGridProgress();
+
+  // ==========================================================================
+  // LÓGICA DE HISTORIAS BÍBLICAS
+  // ==========================================================================
+
+  // Base de datos de historias bíblicas
+  const bibleStories = [
+    {
+      title: "La Creación del Mundo",
+      testament: "antiguo",
+      category: "CREACIÓN",
+      desc: "Dios crea el cielo, la tierra y todo lo que existe en seis días.",
+      refs: ["Génesis 1:1-31", "Génesis 2:1-25"]
+    },
+    {
+      title: "Adán y Eva en el Edén",
+      testament: "antiguo",
+      category: "CREACIÓN",
+      desc: "La creación del primer hombre y mujer, y su vida en el jardín del Edén.",
+      refs: ["Génesis 2:4-25"]
+    },
+    {
+      title: "La Caída del Hombre",
+      testament: "antiguo",
+      category: "CREACIÓN",
+      desc: "Adán y Eva desobedecen a Dios y comen del fruto prohibido.",
+      refs: ["Génesis 3:1-24"]
+    },
+    {
+      title: "Caín y Abel",
+      testament: "antiguo",
+      category: "CREACIÓN",
+      desc: "La historia de los primeros hijos de Adán y Eva, y el primer asesinato.",
+      refs: ["Génesis 4:1-16"]
+    },
+    {
+      title: "Noé y el Arca",
+      testament: "antiguo",
+      category: "DILUVIO",
+      desc: "Dios envía un diluvio para limpiar la tierra, pero salva a Noé y su familia.",
+      refs: ["Génesis 6:5-22", "Génesis 7:1-24", "Génesis 8:1-22"]
+    },
+    {
+      title: "La Torre de Babel",
+      testament: "antiguo",
+      category: "PRIMEROS TIEMPOS",
+      desc: "Los hombres intentan construir una torre hasta el cielo, y Dios confunde sus lenguas.",
+      refs: ["Génesis 11:1-9"]
+    },
+    {
+      title: "El Nacimiento de Jesús",
+      testament: "nuevo",
+      category: "JESUCRISTO",
+      desc: "Jesús, el Salvador prometido, nace en un pesebre en Belén.",
+      refs: ["Lucas 2:1-20", "Mateo 1:18-25"]
+    },
+    {
+      title: "El Bautismo de Jesús",
+      testament: "nuevo",
+      category: "JESUCRISTO",
+      desc: "Juan el Bautista bautiza a Jesús en el río Jordán, y el Espíritu Santo desciende como paloma.",
+      refs: ["Mateo 3:13-17", "Marcos 1:9-11"]
+    },
+    {
+      title: "La Tentación en el Desierto",
+      testament: "nuevo",
+      category: "JESUCRISTO",
+      desc: "Jesús es tentado por el diablo durante cuarenta días en el desierto.",
+      refs: ["Mateo 4:1-11", "Lucas 4:1-13"]
+    },
+    {
+      title: "La Crucifixión y Muerte",
+      testament: "nuevo",
+      category: "JESUCRISTO",
+      desc: "Jesús es crucificado en el Calvario para el perdón de los pecados de la humanidad.",
+      refs: ["Lucas 23:26-49", "Juan 19:16-37"]
+    },
+    {
+      title: "La Resurrección Victoriosa",
+      testament: "nuevo",
+      category: "JESUCRISTO",
+      desc: "Al tercer día, la tumba se encuentra vacía y Jesús resucita victorioso sobre la muerte.",
+      refs: ["Mateo 28:1-10", "Lucas 24:1-12"]
+    }
+  ];
+
+  // Cerrar sección de historias (regresa a devocional)
+  btnCloseStories.addEventListener('click', () => {
+    switchMainTab('devotional');
+  });
+
+  // Filtros de historias
+  filterStoryAll.addEventListener('click', () => {
+    setActiveStoryFilter('all');
+  });
+
+  filterStoryAntiguo.addEventListener('click', () => {
+    setActiveStoryFilter('antiguo');
+  });
+
+  filterStoryNuevo.addEventListener('click', () => {
+    setActiveStoryFilter('nuevo');
+  });
+
+  function setActiveStoryFilter(filterType) {
+    [filterStoryAll, filterStoryAntiguo, filterStoryNuevo].forEach(btn => btn.classList.remove('active'));
+    if (filterType === 'all') filterStoryAll.classList.add('active');
+    if (filterType === 'antiguo') filterStoryAntiguo.classList.add('active');
+    if (filterType === 'nuevo') filterStoryNuevo.classList.add('active');
+
+    renderStories(filterType);
+  }
+
+  // Renderizar historias bíblicas
+  function renderStories(filterType) {
+    storiesGridContainer.innerHTML = '';
+    const filtered = filterType === 'all' 
+      ? bibleStories 
+      : bibleStories.filter(s => s.testament === filterType);
+
+    filtered.forEach(story => {
+      const card = document.createElement('div');
+      card.className = 'story-card';
+      
+      const refHtml = story.refs.map(ref => `<button class="btn-story-ref" data-ref="${ref}">${ref}</button>`).join(' ');
+
+      card.innerHTML = `
+        <div>
+          <div class="story-card-header">
+            <h3 class="story-card-title">${story.title}</h3>
+            <span class="story-badge-testament">${story.testament === 'antiguo' ? 'Antiguo' : 'Nuevo'}</span>
+          </div>
+          <div class="story-category">${story.category}</div>
+          <p class="story-desc">${story.desc}</p>
+        </div>
+        <div class="story-references">
+          ${refHtml}
+        </div>
+      `;
+
+      // Event listener para las referencias
+      card.querySelectorAll('.btn-story-ref').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const refText = btn.getAttribute('data-ref');
+          navigateToBibleFromStory(refText);
+        });
+      });
+
+      storiesGridContainer.appendChild(card);
+    });
+  }
+
+  // Navegar al lector de Biblia desde una historia
+  function navigateToBibleFromStory(refStr) {
+    // Parser de citas estructuradas
+    // Ej: "Génesis 1:1-31" -> libro: "Génesis", capítulo: 1
+    const match = refStr.match(/^(\d?\s*[a-záéíóúüñ\s]+)\s*(\d+)/i);
+    if (!match) return;
+
+    const bookName = match[1].trim();
+    const chapterNum = parseInt(match[2]);
+
+    const foundBook = bibleBooks.find(b => b.name.toLowerCase() === bookName.toLowerCase() || 
+                                           removeAccents(b.name.toLowerCase()) === removeAccents(bookName.toLowerCase()));
+
+    if (foundBook) {
+      // 1. Cambiar a pestaña lectura
+      switchMainTab('lectura');
+      
+      // 2. Indicar que al volver del lector de Biblia debe regresar a historias
+      returnToViewAfterReader = 'stories';
+      
+      // 3. Abrir el capítulo en el lector
+      openChapter(foundBook, chapterNum);
+    } else {
+      console.warn(`No se pudo encontrar el libro: ${bookName}`);
+    }
+  }
 
 });

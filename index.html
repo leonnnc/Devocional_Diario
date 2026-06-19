@@ -21,7 +21,7 @@
     <div class="header-container">
       <div class="logo-area">
         <span class="logo-icon">📖</span>
-        <h1 class="logo-title">Devocional Diario <span class="logo-version">v0.6.9</span></h1>
+        <h1 class="logo-title">Devocional Bíblico Diario <span class="logo-version">v0.6.9</span></h1>
       </div>
       
       <!-- Navegación de Pestañas -->
@@ -32,7 +32,7 @@
         <button id="tab-lectura" class="nav-tab">
           <span class="nav-tab-icon">📱</span> Lectura
         </button>
-        <button id="tab-historias" class="nav-tab disabled" disabled title="Próximamente">
+        <button id="tab-historias" class="nav-tab">
           <span class="nav-tab-icon">🛡️</span> Historias
         </button>
         <button id="tab-recursos" class="nav-tab disabled" disabled title="Próximamente">
@@ -295,6 +295,26 @@
         </div>
       </div>
     </div> <!-- Fin Sección Lectura -->
+
+    <!-- Sección de Historias Bíblicas -->
+    <div id="section-historias" class="app-section" style="display: none;">
+      <div class="stories-header">
+        <h2 class="stories-headline">Historias Bíblicas</h2>
+        <button id="btn-close-stories" class="btn-close-section" aria-label="Cerrar historias" title="Volver al Devocional">&times;</button>
+      </div>
+
+      <!-- Filtros de Historias -->
+      <div class="stories-filters-container">
+        <button id="filter-story-all" class="btn-filter-story active">Todas</button>
+        <button id="filter-story-antiguo" class="btn-filter-story">Antiguo Testamento</button>
+        <button id="filter-story-nuevo" class="btn-filter-story">Nuevo Testamento</button>
+      </div>
+
+      <!-- Grilla de Tarjetas de Historias -->
+      <div id="stories-grid-container" class="stories-grid">
+        <!-- Dinámico en JS -->
+      </div>
+    </div> <!-- Fin Sección Historias -->
 
   </main>
 

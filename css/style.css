@@ -1391,7 +1391,6 @@ body.theme-dark .nav-tab.active {
 
 .plan-card {
   border-radius: var(--border-radius-md);
-  border: 1px solid var(--border-color);
   background-color: var(--card-bg);
   padding: 24px;
   display: flex;
@@ -1400,12 +1399,13 @@ body.theme-dark .nav-tab.active {
   box-shadow: 0 4px 15px var(--shadow-color);
   transition: all var(--transition-speed) ease;
   min-height: 220px;
+  border: 1.5px solid var(--plan-border, var(--border-color));
 }
 
 .plan-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px var(--shadow-color);
-  border-color: var(--accent-color);
+  border-color: var(--plan-border-hover, var(--accent-color));
 }
 
 .plan-card-header {
@@ -1425,12 +1425,61 @@ body.theme-dark .nav-tab.active {
 .plan-badge {
   font-size: 0.75rem;
   font-weight: 600;
-  padding: 4px 10px;
+  padding: 6px 14px;
   border-radius: 20px;
-  background-color: var(--highlight-bg);
-  color: var(--accent-color);
-  border: 1px solid var(--border-color);
+  background-color: var(--plan-badge-bg, var(--highlight-bg));
+  color: var(--plan-badge-text, var(--accent-color));
+  border: none;
   white-space: nowrap;
+  transition: all var(--transition-speed) ease;
+}
+
+.plan-card .btn-start-plan {
+  width: 100%;
+  display: block;
+  font-weight: 600;
+  background-color: var(--plan-btn-bg, var(--accent-color));
+  color: var(--plan-btn-text, #ffffff);
+  border: none;
+  box-shadow: none;
+  transition: all var(--transition-speed) ease;
+}
+
+.plan-card .btn-start-plan:hover {
+  background-color: var(--plan-btn-bg-hover, var(--accent-hover));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+/* Configuraciones de tema para tarjetas de planes */
+body.theme-dark {
+  --plan-border: #dfc19c;
+  --plan-border-hover: #c5a880;
+  --plan-badge-bg: #dfc19c;
+  --plan-badge-text: #1e293b;
+  --plan-btn-bg: #dfc19c;
+  --plan-btn-text: #1e293b;
+  --plan-btn-bg-hover: #c5a880;
+}
+
+body.theme-sepia {
+  --plan-border: rgba(178, 94, 26, 0.4);
+  --plan-border-hover: var(--accent-color);
+  --plan-badge-bg: var(--accent-color);
+  --plan-badge-text: #ffffff;
+  --plan-btn-bg: var(--accent-color);
+  --plan-btn-text: #ffffff;
+  --plan-btn-bg-hover: var(--accent-hover);
+}
+
+body.theme-light {
+  --plan-border: var(--border-color);
+  --plan-border-hover: var(--accent-color);
+  --plan-badge-bg: var(--highlight-bg);
+  --plan-badge-text: var(--accent-color);
+  --plan-btn-bg: var(--accent-color);
+  --plan-btn-text: #ffffff;
+  --plan-btn-bg-hover: var(--accent-hover);
 }
 
 .plan-card-desc {

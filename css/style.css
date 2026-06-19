@@ -1921,13 +1921,13 @@ body.theme-dark .plan-day-checkbox-wrapper.completed {
 .story-card {
   border-radius: var(--border-radius-md);
   background-color: var(--card-bg);
-  padding: 18px;
+  padding: 14px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   box-shadow: 0 4px 15px var(--shadow-color);
   transition: all var(--transition-speed) ease;
-  min-height: 175px;
+  min-height: 140px;
   border: 1.5px solid var(--plan-border, var(--border-color));
 }
 
@@ -1942,19 +1942,19 @@ body.theme-dark .plan-day-checkbox-wrapper.completed {
   justify-content: space-between;
   align-items: flex-start;
   gap: 10px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .story-card-title {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--text-primary);
 }
 
 .story-badge-testament {
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   font-weight: 600;
-  padding: 3px 8px;
+  padding: 2px 6px;
   border-radius: 12px;
   background-color: rgba(56, 189, 248, 0.15);
   color: #38bdf8;
@@ -1967,18 +1967,18 @@ body.theme-light .story-badge-testament {
 }
 
 .story-category {
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   font-weight: 700;
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .story-desc {
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   color: var(--text-secondary);
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   flex-grow: 1;
   line-height: 1.5;
 }
@@ -1986,19 +1986,19 @@ body.theme-light .story-badge-testament {
 .story-references {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 4px;
   border-top: 1px solid var(--border-color);
-  padding-top: 10px;
+  padding-top: 8px;
 }
 
 .btn-story-ref {
-  padding: 4px 8px;
+  padding: 3px 6px;
   border-radius: var(--border-radius-sm);
   background-color: var(--highlight-bg);
   border: 1px solid var(--border-color);
   color: var(--text-primary);
   font-family: var(--font-interface);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 500;
   cursor: pointer;
   transition: all var(--transition-speed) ease;

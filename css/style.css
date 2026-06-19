@@ -476,6 +476,18 @@ body {
   transform: translateY(-2px);
 }
 
+.btn-secondary.active {
+  background-color: var(--accent-color);
+  color: #ffffff;
+  border-color: var(--accent-color);
+  box-shadow: 0 3px 8px rgba(178, 94, 26, 0.3);
+}
+
+.btn-secondary.active:hover {
+  background-color: var(--accent-hover);
+  color: #ffffff;
+}
+
 .btn:active {
   transform: translateY(0);
 }

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Devocional Diario | Tu espacio de reflexión y lectura de la Biblia</title>
+  <meta name="description" content="Inicia tu día con una palabra de aliento. Encuentra el versículo del día de la versión Reina Valera 1960, reflexiona y guarda tus notas personales en un entorno adaptado para la lectura cómoda.">
+  
+  <!-- Google Fonts - Serif para el texto bíblico y Sans-Serif para la interfaz -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Estilos CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="theme-sepia"> <!-- Tema sepia por defecto para calidez de lectura -->
+  
+  <!-- Encabezado del Portal -->
+  <header class="main-header">
+    <div class="header-container">
+      <div class="logo-area">
+        <span class="logo-icon">📖</span>
+        <h1 class="logo-title">Devocional Diario</h1>
+      </div>
+      
+      <!-- Controles de Lectura (Accesibilidad y Personalización) -->
+      <div class="header-actions">
+        <button id="btn-radio-toggle" class="btn-control-radio" title="Escuchar Radio en Vivo" aria-label="Escuchar Radio en Vivo">
+          <span class="icon">📻</span> <span>Radio</span>
+        </button>
+        <button id="btn-history-toggle" class="btn-control-history" title="Ver Historial de Lectura" aria-label="Ver Historial de Lectura">
+          <span class="icon">📅</span> <span>Historial</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenedor Principal -->
+  <main class="main-content container">
+    <!-- El cuadro del versículo es general (ocupa todo el ancho) -->
+    <section class="devotional-section" aria-labelledby="section-devotional-title">
+      <h2 class="sr-only" id="section-devotional-title">Versículo y Reflexión del Día</h2>
+      
+      <div class="devotional-card" id="devotional-display-card">
+        
+        <div class="devotional-header">
+          <h3 id="devotional-title" class="devotional-headline">Cargando devocional...</h3>
+        </div>
+        
+        <blockquote class="bible-quote-container">
+          <span class="quote-mark open-quote">“</span>
+          <p id="bible-verse-text" class="bible-verse-body">...</p>
+          <span class="quote-mark close-quote">”</span>
+          <cite id="bible-verse-reference" class="bible-verse-cite">...</cite>
+        </blockquote>
+      
+        <!-- Ajustes de Lectura Rápidos (Debajo del Versículo) -->
+        <div class="quick-reading-settings">
+          <div class="quick-setting-item version-select-wrapper">
+            <select id="bible-version-select" class="quick-select" aria-label="Seleccionar Versión de la Biblia">
+              <option value="rv1960" selected>Reina Valera 1960 (RV1960)</option>
+              <option value="nvi" disabled>NVI (Próximamente)</option>
+            </select>
+          </div>
+          <div class="quick-setting-item font-size-wrapper">
+            <button id="btn-font-decrease" class="btn-quick-control" title="Reducir tamaño de letra" aria-label="Reducir tamaño de letra">-</button>
+            <span id="font-size-display" class="quick-font-display">100%</span>
+            <button id="btn-font-increase" class="btn-quick-control" title="Aumentar tamaño de letra" aria-label="Aumentar tamaño de letra">+</button>
+          </div>
+          <div class="quick-setting-item theme-select-wrapper">
+            <button id="btn-theme-light" class="btn-theme-dot theme-dot-light" title="Tema Claro" aria-label="Tema Claro"></button>
+            <button id="btn-theme-sepia" class="btn-theme-dot theme-dot-sepia active" title="Tema Sepia" aria-label="Tema Sepia"></button>
+            <button id="btn-theme-dark" class="btn-theme-dot theme-dot-dark" title="Tema Oscuro" aria-label="Tema Oscuro"></button>
+          </div>
+        </div>
+        
+        <div class="reflection-container">
+          <h4 class="reflection-title">Meditación Diaria</h4>
+          <p id="devotional-reflection-text" class="reflection-body">...</p>
+          
+          <!-- Diario de Reflexiones Personales Integrado -->
+          <div class="journal-box-integrated">
+            <h4 class="reflection-title journal-integrated-title">Mi Reflexión</h4>
+            <p class="journal-description-integrated">Escribe tus pensamientos, propósitos u oraciones de hoy sobre el versículo.</p>
+            <textarea id="journal-textarea" class="journal-input" placeholder="Escribe aquí tu reflexión para hoy..." aria-label="Escribe aquí tu reflexión para hoy"></textarea>
+            <div class="journal-footer">
+              <span id="journal-save-status" class="save-status">Guardado automáticamente</span>
+              <button id="btn-export-journal" class="btn-text-action" title="Exportar todas mis notas">Exportar notas</button>
+            </div>
+          </div>
+        </div>
+        
+        <div id="devotional-date" class="devotional-meta-date">18 de Junio, 2026</div>
+        
+        <div class="devotional-actions">
+          <button id="btn-copy-verse" class="btn btn-secondary">
+            <span class="icon">📋</span> Copiar Versículo
+          </button>
+          <button id="btn-share-verse" class="btn btn-secondary">
+            <span class="icon">🔗</span> Compartir
+          </button>
+          <button id="btn-tts-read" class="btn btn-secondary" title="Escuchar devocional en voz alta">
+            <span class="icon">🔊</span> Escuchar
+          </button>
+          <button id="btn-mark-read" class="btn btn-primary">
+            <span class="icon">✓</span> Completar Devocional
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Panel Lateral (Historial Drawer) -->
+  <div id="history-drawer" class="history-drawer">
+    <div class="drawer-header">
+      <span class="drawer-title">📅 Historial de Lectura</span>
+      <button id="btn-history-drawer-close" class="btn-drawer-close" aria-label="Cerrar Historial">&times;</button>
+    </div>
+    <div class="drawer-body">
+      <ul id="history-list" class="history-drawer-list">
+        <!-- Elementos dinámicos en JS -->
+        <li class="history-empty">Tu historial aparecerá aquí próximamente.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Sombra de Fondo para el Panel Lateral (Overlay) -->
+  <div id="drawer-overlay" class="drawer-overlay"></div>
+
+  <!-- Modal para ver versículo del Historial -->
+  <div id="history-modal" class="modal-overlay">
+    <div class="modal-container">
+      <button id="btn-modal-close" class="modal-close" aria-label="Cerrar modal">&times;</button>
+      <div class="modal-header">
+        <span class="modal-badge">Lectura Histórica</span>
+        <h3 id="modal-devotional-title" class="modal-headline">Cargando...</h3>
+        <div id="modal-devotional-date" class="modal-meta-date">...</div>
+      </div>
+      <blockquote class="bible-quote-container modal-quote">
+        <span class="quote-mark open-quote">“</span>
+        <p id="modal-verse-text" class="bible-verse-body">...</p>
+        <span class="quote-mark close-quote">”</span>
+        <cite id="modal-verse-reference" class="bible-verse-cite">...</cite>
+      </blockquote>
+      <div class="modal-actions-footer">
+        <button id="btn-modal-load" class="btn btn-primary">
+          <span class="icon">📖</span> Abrir en el Portal
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pie de página -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Devocional Diario. Textos Bíblicos tomados de la Santa Biblia, versión Reina-Valera 1960 &copy; Sociedades Bíblicas en América Latina.</p>
+      <p class="footer-note">Diseñado con un entorno responsive y relajante para una lectura sin distracciones.</p>
+    </div>
+  </footer>
+
+  <!-- Reproductor de Radio Flotante en el Pie (Footer Player Bar) -->
+  <div id="floating-radio-bar" class="floating-radio-bar">
+    <div class="radio-bar-container">
+      <button id="btn-radio-play" class="btn-radio-play-mini" aria-label="Reproducir Radio">
+        <span class="play-icon">▶</span>
+      </button>
+      <div class="radio-bar-info">
+        <span class="radio-bar-station-name">Radio Cristiana</span>
+        <span class="radio-bar-status-text">Radio pausada</span>
+      </div>
+      <div class="radio-bar-volume">
+        <span class="volume-icon">🔊</span>
+        <input type="range" id="radio-volume-slider" min="0" max="100" value="80" class="volume-slider-mini" aria-label="Volumen">
+      </div>
+      <!-- Ecualizador animado mini -->
+      <div class="equalizer-mini" id="equalizer-bars">
+        <span class="eq-bar-mini"></span>
+        <span class="eq-bar-mini"></span>
+        <span class="eq-bar-mini"></span>
+        <span class="eq-bar-mini"></span>
+      </div>
+      <button id="btn-radio-bar-close" class="btn-radio-bar-close" title="Ocultar reproductor" aria-label="Ocultar reproductor">×</button>
+    </div>
+  </div>
+
+  <!-- Scripts JS -->
+  <!-- Firebase SDKs (Compat v9) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

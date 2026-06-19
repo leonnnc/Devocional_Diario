@@ -1,0 +1,79 @@
+[
+  {
+    "id": 1,
+    "month": 6,
+    "day": 18,
+    "book": "Salmos",
+    "chapter": 23,
+    "verse": "1",
+    "text": "Jehová es mi pastor; nada me faltará.",
+    "devotional_title": "La Provisión Divina",
+    "reflection": "En este día, descansa en la promesa de que Dios es tu Pastor. Él conoce tus necesidades físicas, emocionales y espirituales, y tiene cuidado de ti. Confía en Su dirección y provisión hoy."
+  },
+  {
+    "id": 2,
+    "month": 6,
+    "day": 19,
+    "book": "Rut",
+    "chapter": 1,
+    "verse": "16",
+    "text": "",
+    "devotional_title": "Fidelidad y Compañía",
+    "reflection": "La respuesta de Rut a Noemí nos muestra la profundidad del compromiso y del amor fraternal. Al decidir seguir a su suegra, Rut también decidió abrazar al Dios de Israel como su propio Dios. Esta firme decisión transformó su futuro para siempre."
+  },
+  {
+    "id": 3,
+    "month": 6,
+    "day": 20,
+    "book": "Josué",
+    "chapter": 1,
+    "verse": "9",
+    "text": "Mira que te mando que te esfuerces y seas valiente; no temas ni desmayes, porque Jehová tu Dios estará contigo en dondequiera que vayas.",
+    "devotional_title": "Valentía y Presencia",
+    "reflection": "El valor no es la ausencia de temor, sino la convicción de que Dios está a tu lado. No importa los retos que enfrentes hoy, avanza con paso firme sabiendo que nunca estás solo."
+  },
+  {
+    "id": 4,
+    "month": 6,
+    "day": 21,
+    "book": "Proverbios",
+    "chapter": 3,
+    "verse": "5-6",
+    "text": "Fíate de Jehová de todo tu corazón, y no te apoyes en tu propia prudencia. Reconócelo en todos tus caminos, y él enderezará tus veredas.",
+    "devotional_title": "Confianza de Corazón",
+    "reflection": "A menudo intentamos resolver todo bajo nuestra propia lógica. Hoy se nos invita a rendir nuestros planes ante el Señor y confiar en Su sabiduría perfecta, la cual abrirá los caminos correctos."
+  },
+  {
+    "id": 5,
+    "month": 6,
+    "day": 22,
+    "book": "Isaías",
+    "chapter": 40,
+    "verse": "31",
+    "text": "pero los que esperan a Jehová tendrán nuevas fuerzas; levantarán alas como las águilas; correrán, y no se cansarán; caminarán, y no se fatigarán.",
+    "devotional_title": "El Arte de Esperar",
+    "reflection": "Esperar en Dios no es una actitud pasiva, sino una preparación activa confiando en Su tiempo. En la espera, Él renueva nuestras fuerzas y nos eleva por encima de las dificultades."
+  },
+  {
+    "id": 6,
+    "month": 6,
+    "day": 23,
+    "book": "Mateo",
+    "chapter": 6,
+    "verse": "33",
+    "text": "Mas buscad primeramente el reino de Dios y su justicia, y todas estas cosas os serán añadidas.",
+    "devotional_title": "Prioridades del Reino",
+    "reflection": "A veces nos afanamos por el futuro y lo material. Jesús nos enseña que al alinear nuestro corazón con los valores y la voluntad de Dios, las demás áreas de nuestra vida encontrarán su justo equilibrio."
+  },
+  {
+    "id": 7,
+    "month": 6,
+    "day": 24,
+    "book": "Romanos",
+    "chapter": 8,
+    "verse": "28",
+    "text": "Y sabemos que a los que aman a Dios, todas las cosas les ayudan a bien, esto es, a los que conforme a su propósito son llamados.",
+    "devotional_title": "El Propósito Mayor",
+    "reflection": "Incluso en medio del dolor o la confusión, Dios está tejiendo un tapiz hermoso. Los hilos oscuros también forman parte del diseño divino. Confía en que Él transformará cada circunstancia para tu bien."
+  }
+]

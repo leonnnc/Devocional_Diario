@@ -21,18 +21,36 @@
     <div class="header-container">
       <div class="logo-area">
         <span class="logo-icon">📖</span>
-        <h1 class="logo-title">Devocional Diario</h1>
+        <h1 class="logo-title">Devocional Diario <span class="logo-version">v0.6.9</span></h1>
       </div>
       
-      <!-- Controles de Lectura (Accesibilidad y Personalización) -->
+      <!-- Navegación de Pestañas -->
+      <nav class="header-nav" aria-label="Navegación principal">
+        <button id="tab-devotional" class="nav-tab active">
+          <span class="nav-tab-icon">📖</span> Devocional
+        </button>
+        <button id="tab-lectura" class="nav-tab">
+          <span class="nav-tab-icon">📱</span> Lectura
+        </button>
+        <button id="tab-historias" class="nav-tab disabled" disabled title="Próximamente">
+          <span class="nav-tab-icon">🛡️</span> Historias
+        </button>
+        <button id="tab-recursos" class="nav-tab disabled" disabled title="Próximamente">
+          <span class="nav-tab-icon">🎥</span> Recursos
+        </button>
+        <button id="tab-buscar" class="nav-tab disabled" disabled title="Próximamente">
+          <span class="nav-tab-icon">🔍</span> Buscar
+        </button>
+      </nav>
     </div>
   </header>
 
   <!-- Contenedor Principal -->
   <main class="main-content container">
-    <!-- El cuadro del versículo es general (ocupa todo el ancho) -->
-    <section class="devotional-section" aria-labelledby="section-devotional-title">
-      <h2 class="sr-only" id="section-devotional-title">Versículo y Reflexión del Día</h2>
+    <!-- Sección Devocional -->
+    <div id="section-devotional" class="app-section active">
+      <section class="devotional-section" aria-labelledby="section-devotional-title">
+        <h2 class="sr-only" id="section-devotional-title">Versículo y Reflexión del Día</h2>
       
       <div class="devotional-card" id="devotional-display-card">
         
@@ -107,6 +125,176 @@
         </div>
       </div>
     </section>
+    </div> <!-- Fin Sección Devocional -->
+
+    <!-- Sección de Lectura -->
+    <div id="section-lectura" class="app-section" style="display: none;">
+      <!-- Vista Principal de Lectura (Home) -->
+      <div id="reading-home-view" class="reading-view active">
+        <!-- Sub-cabecera -->
+        <div class="reading-subheader">
+          <span class="bible-version-title">Biblia RV1960</span>
+          <div class="bible-search-container">
+            <input type="text" id="bible-search-input" placeholder="Buscar libro o cita... (ej: Rut 1)" aria-label="Buscar en la Biblia">
+            <button id="btn-bible-search" class="btn btn-primary btn-search-bible">
+              <span class="icon">🔍</span> Buscar
+            </button>
+          </div>
+        </div>
+
+        <!-- Selector de Testamentos -->
+        <div class="testaments-grid">
+          <button id="btn-testament-antiguo" class="testament-card">
+            <span class="testament-title">Antiguo Testamento</span>
+          </button>
+          <button id="btn-testament-nuevo" class="testament-card">
+            <span class="testament-title">Nuevo Testamento</span>
+          </button>
+        </div>
+
+        <!-- Planes de Lectura -->
+        <div class="plans-section-container">
+          <h3 class="section-divider-title">Planes de Lectura</h3>
+          <div class="plans-grid">
+            
+            <!-- Plan 30 Días -->
+            <div class="plan-card" data-plan-id="30days">
+              <div class="plan-card-header">
+                <h4 class="plan-card-title">Plan de 30 Días</h4>
+                <span class="plan-badge">30 días</span>
+              </div>
+              <p class="plan-card-desc">Evangelio de Juan - La vida de Jesús</p>
+              <div class="plan-progress-wrapper" style="display: none;">
+                <div class="plan-progress-bar"><div class="plan-progress-fill" style="width: 0%;"></div></div>
+                <span class="plan-progress-text">0% completado</span>
+              </div>
+              <button class="btn btn-primary btn-start-plan">Comenzar</button>
+            </div>
+
+            <!-- Plan 60 Días -->
+            <div class="plan-card" data-plan-id="60days">
+              <div class="plan-card-header">
+                <h4 class="plan-card-title">Plan de 60 Días</h4>
+                <span class="plan-badge">60 días</span>
+              </div>
+              <p class="plan-card-desc">Los 4 Evangelios - La vida de Jesús desde 4 perspectivas</p>
+              <div class="plan-progress-wrapper" style="display: none;">
+                <div class="plan-progress-bar"><div class="plan-progress-fill" style="width: 0%;"></div></div>
+                <span class="plan-progress-text">0% completado</span>
+              </div>
+              <button class="btn btn-primary btn-start-plan">Comenzar</button>
+            </div>
+
+            <!-- Plan 90 Días -->
+            <div class="plan-card" data-plan-id="90days">
+              <div class="plan-card-header">
+                <h4 class="plan-card-title">Plan de 90 Días</h4>
+                <span class="plan-badge">90 días</span>
+              </div>
+              <p class="plan-card-desc">Nuevo Testamento - Evangelios, Hechos y Epístolas</p>
+              <div class="plan-progress-wrapper" style="display: none;">
+                <div class="plan-progress-bar"><div class="plan-progress-fill" style="width: 0%;"></div></div>
+                <span class="plan-progress-text">0% completado</span>
+              </div>
+              <button class="btn btn-primary btn-start-plan">Comenzar</button>
+            </div>
+
+            <!-- Plan 1 Año -->
+            <div class="plan-card" data-plan-id="365days">
+              <div class="plan-card-header">
+                <h4 class="plan-card-title">Plan de 1 Año</h4>
+                <span class="plan-badge">365 días</span>
+              </div>
+              <p class="plan-card-desc">Biblia Completa - Toda la Palabra de Dios en 365 días</p>
+              <div class="plan-progress-wrapper" style="display: none;">
+                <div class="plan-progress-bar"><div class="plan-progress-fill" style="width: 0%;"></div></div>
+                <span class="plan-progress-text">0% completado</span>
+              </div>
+              <button class="btn btn-primary btn-start-plan">Comenzar</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Vista de Lista de Libros -->
+      <div id="reading-books-view" class="reading-view" style="display: none;">
+        <div class="view-header-back">
+          <button id="btn-back-to-testaments" class="btn btn-secondary btn-back">
+            <span class="icon">⬅</span> Volver
+          </button>
+          <h3 id="reading-testament-title" class="view-header-title">Antiguo Testamento</h3>
+        </div>
+        <div id="books-grid-container" class="books-grid">
+          <!-- Dinámico en JS -->
+        </div>
+      </div>
+
+      <!-- Vista de Lista de Capítulos -->
+      <div id="reading-chapters-view" class="reading-view" style="display: none;">
+        <div class="view-header-back">
+          <button id="btn-back-to-books" class="btn btn-secondary btn-back">
+            <span class="icon">⬅</span> Volver
+          </button>
+          <h3 id="reading-book-title" class="view-header-title">Libro</h3>
+        </div>
+        <div id="chapters-grid-container" class="chapters-grid">
+          <!-- Dinámico en JS -->
+        </div>
+      </div>
+
+      <!-- Vista de Texto del Capítulo (Lector) -->
+      <div id="reading-text-view" class="reading-view" style="display: none;">
+        <div class="view-header-back text-view-header">
+          <button id="btn-back-to-chapters" class="btn btn-secondary btn-back">
+            <span class="icon">⬅</span> Volver
+          </button>
+          <h3 id="reader-chapter-title" class="view-header-title">Juan 1</h3>
+          <button id="btn-reader-mark-complete" class="btn btn-primary btn-mark-chapter-read">
+            <span class="icon">✓</span> Leído
+          </button>
+        </div>
+        
+        <!-- Contenedor del Texto Bíblico -->
+        <div class="bible-reader-card">
+          <div id="bible-reader-text-container" class="bible-reader-text">
+            <!-- Versículos dinámicos en JS -->
+          </div>
+        </div>
+
+        <!-- Controles de navegación inferior -->
+        <div class="reader-nav-footer">
+          <button id="btn-reader-prev" class="btn btn-secondary">
+            <span class="icon">◀</span> Anterior
+          </button>
+          <button id="btn-reader-next" class="btn btn-secondary">
+            Siguiente <span class="icon">▶</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Vista de Detalle de Plan de Lectura -->
+      <div id="reading-plan-detail-view" class="reading-view" style="display: none;">
+        <div class="view-header-back">
+          <button id="btn-back-to-plans" class="btn btn-secondary btn-back">
+            <span class="icon">⬅</span> Volver
+          </button>
+          <h3 id="plan-detail-title" class="view-header-title">Plan de 30 Días</h3>
+        </div>
+
+        <div class="plan-detail-progress-card">
+          <div class="plan-detail-progress-info">
+            <span id="plan-detail-progress-label" class="plan-detail-progress-label">Progreso: 0 de 30 días (0%)</span>
+            <button id="btn-reset-plan" class="btn btn-text-action text-danger">Reiniciar Plan</button>
+          </div>
+          <div class="plan-progress-bar large"><div id="plan-detail-progress-fill" class="plan-progress-fill" style="width: 0%;"></div></div>
+        </div>
+
+        <div id="plan-days-list-container" class="plan-days-list">
+          <!-- Dinámico en JS -->
+        </div>
+      </div>
+    </div> <!-- Fin Sección Lectura -->
 
   </main>
 

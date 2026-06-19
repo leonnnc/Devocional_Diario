@@ -921,4 +921,751 @@ document.addEventListener('DOMContentLoaded', () => {
     return date.toLocaleDateString('es-ES', opciones);
   }
 
+  // ==========================================================================
+  // LÓGICA DE LA SECCIÓN DE LECTURA Y PLANES DE LECTURA
+  // ==========================================================================
+
+  // 1. Elementos del DOM de Lectura
+  const tabDevotional = document.getElementById('tab-devotional');
+  const tabLectura = document.getElementById('tab-lectura');
+  const sectionDevotional = document.getElementById('section-devotional');
+  const sectionLectura = document.getElementById('section-lectura');
+
+  const readingHomeView = document.getElementById('reading-home-view');
+  const readingBooksView = document.getElementById('reading-books-view');
+  const readingChaptersView = document.getElementById('reading-chapters-view');
+  const readingTextView = document.getElementById('reading-text-view');
+  const readingPlanDetailView = document.getElementById('reading-plan-detail-view');
+
+  const btnTestamentAntiguo = document.getElementById('btn-testament-antiguo');
+  const btnTestamentNuevo = document.getElementById('btn-testament-nuevo');
+  const elReadingTestamentTitle = document.getElementById('reading-testament-title');
+  const elBooksGridContainer = document.getElementById('books-grid-container');
+  
+  const btnBackToTestaments = document.getElementById('btn-back-to-testaments');
+  const elReadingBookTitle = document.getElementById('reading-book-title');
+  const elChaptersGridContainer = document.getElementById('chapters-grid-container');
+  
+  const btnBackToBooks = document.getElementById('btn-back-to-books');
+  const elReaderChapterTitle = document.getElementById('reader-chapter-title');
+  const elBibleReaderTextContainer = document.getElementById('bible-reader-text-container');
+  const btnReaderMarkComplete = document.getElementById('btn-reader-mark-complete');
+  const btnReaderPrev = document.getElementById('btn-reader-prev');
+  const btnReaderNext = document.getElementById('btn-reader-next');
+  const btnBackToChapters = document.getElementById('btn-back-to-chapters');
+
+  const btnBackToPlans = document.getElementById('btn-back-to-plans');
+  const elPlanDetailTitle = document.getElementById('plan-detail-title');
+  const elPlanDetailProgressLabel = document.getElementById('plan-detail-progress-label');
+  const elPlanDetailProgressFill = document.getElementById('plan-detail-progress-fill');
+  const elPlanDaysListContainer = document.getElementById('plan-days-list-container');
+  const btnResetPlan = document.getElementById('btn-reset-plan');
+
+  const elBibleSearchInput = document.getElementById('bible-search-input');
+  const btnBibleSearch = document.getElementById('btn-bible-search');
+
+  // Base de datos estática de libros de la Biblia
+  const bibleBooks = [
+    // Antiguo Testamento
+    { name: "Génesis", testament: "antiguo", chapters: 50, filename: "genesis" },
+    { name: "Éxodo", testament: "antiguo", chapters: 40, filename: "exodo" },
+    { name: "Levítico", testament: "antiguo", chapters: 27, filename: "levitico" },
+    { name: "Números", testament: "antiguo", chapters: 36, filename: "numeros" },
+    { name: "Deuteronomio", testament: "antiguo", chapters: 34, filename: "deuteronomio" },
+    { name: "Josué", testament: "antiguo", chapters: 24, filename: "josue" },
+    { name: "Jueces", testament: "antiguo", chapters: 21, filename: "jueces" },
+    { name: "Rut", testament: "antiguo", chapters: 4, filename: "rut" },
+    { name: "1 Samuel", testament: "antiguo", chapters: 31, filename: "1_samuel" },
+    { name: "2 Samuel", testament: "antiguo", chapters: 24, filename: "2_samuel" },
+    { name: "1 Reyes", testament: "antiguo", chapters: 22, filename: "1_reyes" },
+    { name: "2 Reyes", testament: "antiguo", chapters: 25, filename: "2_reyes" },
+    { name: "1 Crónicas", testament: "antiguo", chapters: 29, filename: "1_cronicas" },
+    { name: "2 Crónicas", testament: "antiguo", chapters: 36, filename: "2_cronicas" },
+    { name: "Esdras", testament: "antiguo", chapters: 10, filename: "esdras" },
+    { name: "Nehemías", testament: "antiguo", chapters: 13, filename: "nehemias" },
+    { name: "Ester", testament: "antiguo", chapters: 10, filename: "ester" },
+    { name: "Job", testament: "antiguo", chapters: 42, filename: "job" },
+    { name: "Salmos", testament: "antiguo", chapters: 150, filename: "salmos" },
+    { name: "Proverbios", testament: "antiguo", chapters: 31, filename: "proverbios" },
+    { name: "Eclesiastés", testament: "antiguo", chapters: 12, filename: "eclesiastes" },
+    { name: "Cantares", testament: "antiguo", chapters: 8, filename: "cantares" },
+    { name: "Isaías", testament: "antiguo", chapters: 66, filename: "isaias" },
+    { name: "Jeremías", testament: "antiguo", chapters: 52, filename: "jeremias" },
+    { name: "Lamentaciones", testament: "antiguo", chapters: 5, filename: "lamentaciones" },
+    { name: "Ezequiel", testament: "antiguo", chapters: 48, filename: "ezequiel" },
+    { name: "Daniel", testament: "antiguo", chapters: 12, filename: "daniel" },
+    { name: "Oseas", testament: "antiguo", chapters: 14, filename: "oseas" },
+    { name: "Joel", testament: "antiguo", chapters: 3, filename: "joel" },
+    { name: "Amós", testament: "antiguo", chapters: 9, filename: "amos" },
+    { name: "Abdías", testament: "antiguo", chapters: 1, filename: "abdias" },
+    { name: "Jonás", testament: "antiguo", chapters: 4, filename: "jonas" },
+    { name: "Miqueas", testament: "antiguo", chapters: 7, filename: "miqueas" },
+    { name: "Nahúm", testament: "antiguo", chapters: 3, filename: "nahum" },
+    { name: "Habacuc", testament: "antiguo", chapters: 3, filename: "habacuc" },
+    { name: "Sofonías", testament: "antiguo", chapters: 3, filename: "sofonias" },
+    { name: "Hageo", testament: "antiguo", chapters: 2, filename: "hageo" },
+    { name: "Zacarías", testament: "antiguo", chapters: 14, filename: "zacarias" },
+    { name: "Malaquías", testament: "antiguo", chapters: 4, filename: "malaquias" },
+    
+    // Nuevo Testamento
+    { name: "Mateo", testament: "nuevo", chapters: 28, filename: "mateo" },
+    { name: "Marcos", testament: "nuevo", chapters: 16, filename: "marcos" },
+    { name: "Lucas", testament: "nuevo", chapters: 24, filename: "lucas" },
+    { name: "Juan", testament: "nuevo", chapters: 21, filename: "juan" },
+    { name: "Hechos", testament: "nuevo", chapters: 28, filename: "hechos" },
+    { name: "Romanos", testament: "nuevo", chapters: 16, filename: "romanos" },
+    { name: "1 Corintios", testament: "nuevo", chapters: 16, filename: "1_corintios" },
+    { name: "2 Corintios", testament: "nuevo", chapters: 13, filename: "2_corintios" },
+    { name: "Gálatas", testament: "nuevo", chapters: 6, filename: "galatas" },
+    { name: "Efesios", testament: "nuevo", chapters: 6, filename: "efesios" },
+    { name: "Filipenses", testament: "nuevo", chapters: 4, filename: "filipenses" },
+    { name: "Colosenses", testament: "nuevo", chapters: 4, filename: "colosenses" },
+    { name: "1 Tesalonicenses", testament: "nuevo", chapters: 5, filename: "1_tesalonicenses" },
+    { name: "2 Tesalonicenses", testament: "nuevo", chapters: 3, filename: "2_tesalonicenses" },
+    { name: "1 Timoteo", testament: "nuevo", chapters: 6, filename: "1_timoteo" },
+    { name: "2 Timoteo", testament: "nuevo", chapters: 4, filename: "2_timoteo" },
+    { name: "Tito", testament: "nuevo", chapters: 3, filename: "tito" },
+    { name: "Filemón", testament: "nuevo", chapters: 1, filename: "filemon" },
+    { name: "Hebreos", testament: "nuevo", chapters: 13, filename: "hebreos" },
+    { name: "Santiago", testament: "nuevo", chapters: 5, filename: "santiago" },
+    { name: "1 Pedro", testament: "nuevo", chapters: 5, filename: "1_pedro" },
+    { name: "2 Pedro", testament: "nuevo", chapters: 3, filename: "2_pedro" },
+    { name: "1 Juan", testament: "nuevo", chapters: 5, filename: "1_juan" },
+    { name: "2 Juan", testament: "nuevo", chapters: 1, filename: "2_juan" },
+    { name: "3 Juan", testament: "nuevo", chapters: 1, filename: "3_juan" },
+    { name: "Judas", testament: "nuevo", chapters: 1, filename: "judas" },
+    { name: "Apocalipsis", testament: "nuevo", chapters: 22, filename: "apocalipsis" }
+  ];
+
+  // Estado interno de navegación
+  let currentTestamentSelected = ''; // 'antiguo' o 'nuevo'
+  let currentBookSelected = null;
+  let currentChapterSelected = null;
+  let currentPlanSelected = null;
+  let returnToViewAfterReader = 'chapters'; // 'chapters' o 'plan'
+  let activePlanDays = [];
+
+  // --- NAVEGACIÓN SPA ENTRE SECCIONES ---
+  tabDevotional.addEventListener('click', () => {
+    switchMainTab('devotional');
+  });
+
+  tabLectura.addEventListener('click', () => {
+    switchMainTab('lectura');
+  });
+
+  function switchMainTab(tabId) {
+    if (tabId === 'devotional') {
+      tabDevotional.classList.add('active');
+      tabLectura.classList.remove('active');
+      sectionDevotional.style.display = 'block';
+      sectionLectura.style.display = 'none';
+    } else {
+      tabDevotional.classList.remove('active');
+      tabLectura.classList.add('active');
+      sectionDevotional.style.display = 'none';
+      sectionLectura.style.display = 'block';
+      
+      // Al cambiar a lectura, actualizamos el progreso en la cuadrícula de planes
+      updatePlansGridProgress();
+    }
+  }
+
+  function showReadingSubView(viewId) {
+    const views = [readingHomeView, readingBooksView, readingChaptersView, readingTextView, readingPlanDetailView];
+    views.forEach(v => {
+      if (v.id === viewId) {
+        v.style.display = 'block';
+      } else {
+        v.style.display = 'none';
+      }
+    });
+  }
+
+  // --- EVENTOS DE VISTA DE INICIO (HOME) ---
+  btnTestamentAntiguo.addEventListener('click', () => {
+    openTestament('antiguo');
+  });
+
+  btnTestamentNuevo.addEventListener('click', () => {
+    openTestament('nuevo');
+  });
+
+  function openTestament(testamentId) {
+    currentTestamentSelected = testamentId;
+    elReadingTestamentTitle.textContent = testamentId === 'antiguo' ? 'Antiguo Testamento' : 'Nuevo Testamento';
+    
+    // Filtrar libros
+    const filteredBooks = bibleBooks.filter(b => b.testament === testamentId);
+    elBooksGridContainer.innerHTML = '';
+    
+    filteredBooks.forEach(book => {
+      const btn = document.createElement('button');
+      btn.className = 'book-btn';
+      btn.textContent = book.name;
+      btn.addEventListener('click', () => {
+        openBook(book);
+      });
+      elBooksGridContainer.appendChild(btn);
+    });
+
+    showReadingSubView('reading-books-view');
+  }
+
+  btnBackToTestaments.addEventListener('click', () => {
+    showReadingSubView('reading-home-view');
+  });
+
+  // --- EVENTOS DE VISTA DE LIBROS ---
+  function openBook(bookObj) {
+    currentBookSelected = bookObj;
+    elReadingBookTitle.textContent = bookObj.name;
+    elChaptersGridContainer.innerHTML = '';
+
+    for (let c = 1; c <= bookObj.chapters; c++) {
+      const btn = document.createElement('button');
+      btn.className = 'chapter-btn';
+      
+      // Verificar si el capítulo ya está completado
+      const key = `bible_read_${bookObj.name}_${c}`;
+      if (localStorage.getItem(key) === 'true') {
+        btn.classList.add('read-completed');
+      }
+
+      btn.textContent = c;
+      btn.addEventListener('click', () => {
+        returnToViewAfterReader = 'chapters';
+        openChapter(bookObj, c);
+      });
+      elChaptersGridContainer.appendChild(btn);
+    }
+
+    showReadingSubView('reading-chapters-view');
+  }
+
+  btnBackToBooks.addEventListener('click', () => {
+    openTestament(currentTestamentSelected);
+  });
+
+  // --- EVENTOS DEL LECTOR ---
+  async function openChapter(bookObj, chapterNum) {
+    currentBookSelected = bookObj;
+    currentChapterSelected = chapterNum;
+    elReaderChapterTitle.textContent = `${bookObj.name} ${chapterNum}`;
+    
+    elBibleReaderTextContainer.innerHTML = '<p class="bible-verse-paragraph">Cargando capítulo de la palabra de Dios...</p>';
+    showReadingSubView('reading-text-view');
+
+    // Actualizar estado del botón Completar
+    updateChapterReadButtonState();
+
+    try {
+      const verses = await fetchBibleChapterText(bookObj, chapterNum);
+      renderBibleText(verses);
+    } catch (e) {
+      console.error(e);
+      elBibleReaderTextContainer.innerHTML = '<p class="bible-verse-paragraph">Error al cargar texto sagrado. Comprueba los archivos locales o tu conexión.</p>';
+    }
+
+    // Scroll al inicio del lector
+    elBibleReaderTextContainer.scrollTop = 0;
+  }
+
+  async function fetchBibleChapterText(bookObj, chapterNum) {
+    // --- 1. MODO FIREBASE ---
+    if (typeof USE_FIREBASE !== 'undefined' && USE_FIREBASE && firestoreDb) {
+      const docId = `${bookObj.filename}_${chapterNum}`;
+      if (loadedBooksCache.has(docId)) {
+        return loadedBooksCache.get(docId).verses || {};
+      }
+      try {
+        const docRef = firestoreDb.collection('bible_rv1960').doc(docId);
+        const docSnap = await docRef.get();
+        if (docSnap.exists) {
+          const chapterData = docSnap.data();
+          loadedBooksCache.set(docId, chapterData);
+          return chapterData.verses || {};
+        }
+      } catch (err) {
+        console.error("Firestore read error:", err);
+      }
+    }
+
+    // --- 2. MODO ARCHIVO LOCAL ---
+    if (loadedBooksCache.has(bookObj.filename)) {
+      const cachedText = loadedBooksCache.get(bookObj.filename);
+      return parseLocalFileVerses(cachedText, chapterNum);
+    }
+
+    try {
+      const response = await fetch(`data/rv1960/${bookObj.filename}.txt?v=1.0.1`);
+      if (response.ok) {
+        const text = await response.text();
+        loadedBooksCache.set(bookObj.filename, text);
+        return parseLocalFileVerses(text, chapterNum);
+      }
+    } catch (err) {
+      console.warn(`Archivo local data/rv1960/${bookObj.filename}.txt no disponible. Usando fallback simulador.`);
+    }
+
+    // --- 3. MODO SIMULACIÓN OFFLINE PREMIUM ---
+    return getMockChapterVerses(bookObj.name, chapterNum);
+  }
+
+  function parseLocalFileVerses(bookText, chapterNum) {
+    const verses = {};
+    const lines = bookText.split('\n').filter(l => l.trim().length > 0);
+    lines.forEach(line => {
+      const match = line.match(/\(\d+,\s*(\d+),\s*(\d+),\s*'(.*?)'\)/);
+      if (match) {
+        const [_, lineChapter, lineVerse, lineText] = match;
+        if (parseInt(lineChapter) === chapterNum) {
+          verses[lineVerse] = lineText.replace(/\\'/g, "'");
+        }
+      }
+    });
+    return verses;
+  }
+
+  function getMockChapterVerses(bookName, chapter) {
+    const verses = {};
+    // Simulamos cantidad de versículos en base al capítulo
+    const seed = (bookName.charCodeAt(0) + chapter) % 15;
+    const totalVerses = seed + 15; // Entre 15 y 30 versículos
+    
+    const biblicalPhrases = [
+      "Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna.",
+      "El que habita al abrigo del Altísimo morará bajo la sombra del Omnipotente. Diré yo a Jehová: Esperanza mía, y castillo mío; Mi Dios, en quien confiaré.",
+      "Jehová es mi pastor; nada me faltará. En lugares de delicados pastos me hará descansar; Junto a aguas de reposo me pastoreará.",
+      "Mira que te mando que te esfuerces y seas valiente; no temas ni desmayes, porque Jehová tu Dios estará contigo en dondequiera que vayas.",
+      "Fíate de Jehová de todo tu corazón, y no te apoyes en tu propia prudencia. Reconócelo en todos tus caminos, y él enderezará tus veredas.",
+      "Todo lo puedo en Cristo que me fortalece. Y mi Dios suplirá todo lo que os falta conforme a sus riquezas en gloria en Cristo Jesús.",
+      "Clama a mí, y yo te responderé, y te enseñará cosas grandes y ocultas que tú no conoces.",
+      "Tu palabra es una lámpara para mis pies, y una luz para mi camino. He guardado en mi corazón tus dichos, para no pecar contra ti.",
+      "Pero los que esperan a Jehová tendrán nuevas fuerzas; levantarán alas como las águilas; correrán, y no se cansarán; caminarán, y no se fatigarán.",
+      "Mas buscad primeramente el reino de Dios y su justicia, y todas estas cosas os serán añadidas.",
+      "Y sabemos que a los que aman a Dios, todas las cosas les ayudan a bien, esto es, a los que conforme a su propósito son llamados.",
+      "La ley de Jehová es perfecta, que convierte el alma; El testimonio de Jehová es fiel, que hace sabio al sencillo."
+    ];
+
+    for (let i = 1; i <= totalVerses; i++) {
+      const p1 = biblicalPhrases[(seed + i) % biblicalPhrases.length];
+      const p2 = biblicalPhrases[(seed + i * 3) % biblicalPhrases.length];
+      verses[String(i)] = `${p1} Que la paz de Dios guarde tu mente en este día. ${p2}`;
+    }
+    return verses;
+  }
+
+  function renderBibleText(verses) {
+    elBibleReaderTextContainer.innerHTML = '';
+    const sortedVerseNums = Object.keys(verses).map(Number).sort((a, b) => a - b);
+    
+    if (sortedVerseNums.length === 0) {
+      elBibleReaderTextContainer.innerHTML = '<p class="bible-verse-paragraph">Este capítulo no contiene versículos indexados en el servidor.</p>';
+      return;
+    }
+
+    sortedVerseNums.forEach(num => {
+      const p = document.createElement('p');
+      p.className = 'bible-verse-paragraph';
+      p.innerHTML = `<span class="verse-num">${num}</span>${verses[String(num)]}`;
+      elBibleReaderTextContainer.appendChild(p);
+    });
+  }
+
+  function updateChapterReadButtonState() {
+    if (!currentBookSelected || !currentChapterSelected) return;
+    const key = `bible_read_${currentBookSelected.name}_${currentChapterSelected}`;
+    const isCompleted = localStorage.getItem(key) === 'true';
+
+    if (isCompleted) {
+      btnReaderMarkComplete.innerHTML = '<span class="icon">✓</span> Completado';
+      btnReaderMarkComplete.classList.remove('btn-primary');
+      btnReaderMarkComplete.classList.add('btn-secondary');
+    } else {
+      btnReaderMarkComplete.innerHTML = '<span class="icon">✓</span> Leído';
+      btnReaderMarkComplete.classList.remove('btn-secondary');
+      btnReaderMarkComplete.classList.add('btn-primary');
+    }
+  }
+
+  btnReaderMarkComplete.addEventListener('click', () => {
+    if (!currentBookSelected || !currentChapterSelected) return;
+    const key = `bible_read_${currentBookSelected.name}_${currentChapterSelected}`;
+    const isCompleted = localStorage.getItem(key) === 'true';
+
+    if (isCompleted) {
+      localStorage.removeItem(key);
+    } else {
+      localStorage.setItem(key, 'true');
+    }
+    updateChapterReadButtonState();
+  });
+
+  btnReaderPrev.addEventListener('click', () => {
+    if (currentChapterSelected > 1) {
+      openChapter(currentBookSelected, currentChapterSelected - 1);
+    } else {
+      // Ir al libro anterior si es posible
+      const bookIdx = bibleBooks.findIndex(b => b.name === currentBookSelected.name);
+      if (bookIdx > 0) {
+        const prevBook = bibleBooks[bookIdx - 1];
+        openChapter(prevBook, prevBook.chapters);
+      }
+    }
+  });
+
+  btnReaderNext.addEventListener('click', () => {
+    if (currentChapterSelected < currentBookSelected.chapters) {
+      openChapter(currentBookSelected, currentChapterSelected + 1);
+    } else {
+      // Ir al libro siguiente si es posible
+      const bookIdx = bibleBooks.findIndex(b => b.name === currentBookSelected.name);
+      if (bookIdx < bibleBooks.length - 1) {
+        const nextBook = bibleBooks[bookIdx + 1];
+        openChapter(nextBook, 1);
+      }
+    }
+  });
+
+  btnBackToChapters.addEventListener('click', () => {
+    if (returnToViewAfterReader === 'plan') {
+      renderPlanDetailView(currentPlanSelected);
+    } else {
+      openBook(currentBookSelected);
+    }
+  });
+
+  // --- LÓGICA DE BUSCADOR DE BIBLIA ---
+  btnBibleSearch.addEventListener('click', () => {
+    performBibleSearch();
+  });
+
+  elBibleSearchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      performBibleSearch();
+    }
+  });
+
+  function performBibleSearch() {
+    const query = elBibleSearchInput.value.trim().toLowerCase();
+    if (query.length === 0) return;
+
+    // Quitar acentos para búsqueda insensible a tildes
+    const cleanQuery = removeAccents(query);
+
+    // Buscar coincidencia en libros
+    // Regex para buscar libro y capítulo, ej: "rut 1" o "1 juan 2" o "juan 3:16"
+    const match = cleanQuery.match(/^(\d?\s*[a-záéíóúüñ]+)\s*(\d+)?(?:\s*:\s*(\d+))?$/i);
+    
+    if (match) {
+      const bookNameQuery = removeAccents(match[1].trim());
+      const chapterNum = match[2] ? parseInt(match[2]) : null;
+      
+      const foundBook = bibleBooks.find(b => removeAccents(b.name.toLowerCase()) === bookNameQuery || 
+                                             removeAccents(b.name.toLowerCase()).replace(/\s+/g, '') === bookNameQuery.replace(/\s+/g, ''));
+      
+      if (foundBook) {
+        if (chapterNum) {
+          const cap = Math.min(Math.max(chapterNum, 1), foundBook.chapters);
+          returnToViewAfterReader = 'chapters';
+          openChapter(foundBook, cap);
+        } else {
+          openBook(foundBook);
+        }
+        elBibleSearchInput.value = ''; // Limpiar buscador
+        return;
+      }
+    }
+
+    // Si no es una búsqueda estructurada, buscar coincidencia parcial en nombre de libro
+    const partialMatch = bibleBooks.find(b => removeAccents(b.name.toLowerCase()).includes(cleanQuery));
+    if (partialMatch) {
+      openBook(partialMatch);
+      elBibleSearchInput.value = '';
+    } else {
+      alert(`No se encontró ningún libro o cita bíblica para: "${elBibleSearchInput.value}"`);
+    }
+  }
+
+  function removeAccents(str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
+  // --- LÓGICA DE PLANES DE LECTURA ---
+  
+  // Registrar clicks en planes desde la home
+  document.querySelectorAll('.plan-card').forEach(card => {
+    const planId = card.getAttribute('data-plan-id');
+    const startBtn = card.querySelector('.btn-start-plan');
+    
+    startBtn.addEventListener('click', () => {
+      startOrContinuePlan(planId);
+    });
+  });
+
+  function startOrContinuePlan(planId) {
+    currentPlanSelected = planId;
+    
+    // Marcar plan como iniciado
+    localStorage.setItem(`devocional_plan_${planId}_started`, 'true');
+    
+    renderPlanDetailView(planId);
+  }
+
+  function generatePlanDays(planId) {
+    let chaptersList = [];
+    if (planId === '30days') {
+      // Juan (21) + 1 Juan (5) + 2 Juan (1) + 3 Juan (1) + Salmos 23 y 121 -> total 30
+      for (let i = 1; i <= 21; i++) chaptersList.push({ book: 'Juan', chapter: i });
+      for (let i = 1; i <= 5; i++) chaptersList.push({ book: '1 Juan', chapter: i });
+      chaptersList.push({ book: '2 Juan', chapter: 1 });
+      chaptersList.push({ book: '3 Juan', chapter: 1 });
+      chaptersList.push({ book: 'Salmos', chapter: 23 });
+      chaptersList.push({ book: 'Salmos', chapter: 121 });
+    } else if (planId === '60days') {
+      // 4 Evangelios -> Mateo (28), Marcos (16), Lucas (24), Juan (21) -> total 89
+      const books = [
+        { name: 'Mateo', count: 28 }, { name: 'Marcos', count: 16 },
+        { name: 'Lucas', count: 24 }, { name: 'Juan', count: 21 }
+      ];
+      books.forEach(b => {
+        for (let i = 1; i <= b.count; i++) chaptersList.push({ book: b.name, chapter: i });
+      });
+    } else if (planId === '90days') {
+      // Nuevo Testamento -> 260 capítulos
+      const NTBooks = bibleBooks.filter(b => b.testament === 'nuevo');
+      NTBooks.forEach(b => {
+        for (let i = 1; i <= b.chapters; i++) chaptersList.push({ book: b.name, chapter: i });
+      });
+    } else if (planId === '365days') {
+      // Biblia Completa -> 1189 capítulos
+      bibleBooks.forEach(b => {
+        for (let i = 1; i <= b.chapters; i++) chaptersList.push({ book: b.name, chapter: i });
+      });
+    }
+
+    const totalDays = planId === '30days' ? 30 : planId === '60days' ? 60 : planId === '90days' ? 90 : 365;
+    const targetDays = [];
+    const totalChapters = chaptersList.length;
+    const ratio = totalChapters / totalDays;
+
+    let chapterIdx = 0;
+    for (let d = 1; d <= totalDays; d++) {
+      const targetEndIdx = Math.round(d * ratio);
+      const dayChapters = [];
+      while (chapterIdx < targetEndIdx && chapterIdx < totalChapters) {
+        dayChapters.push(chaptersList[chapterIdx]);
+        chapterIdx++;
+      }
+
+      let label = '';
+      if (dayChapters.length === 0) {
+        label = 'Reflexión y Oración';
+      } else {
+        const groups = {};
+        dayChapters.forEach(c => {
+          if (!groups[c.book]) groups[c.book] = [];
+          groups[c.book].push(c.chapter);
+        });
+
+        const parts = [];
+        Object.keys(groups).forEach(bookName => {
+          const chapters = groups[bookName];
+          if (chapters.length === 1) {
+            parts.push(`${bookName} ${chapters[0]}`);
+          } else {
+            const min = Math.min(...chapters);
+            const max = Math.max(...chapters);
+            if (max - min === chapters.length - 1) {
+              parts.push(`${bookName} ${min}-${max}`);
+            } else {
+              parts.push(`${bookName} ${chapters.join(', ')}`);
+            }
+          }
+        });
+        label = parts.join('; ');
+      }
+
+      targetDays.push({
+        day: d,
+        label: label,
+        chapters: dayChapters
+      });
+    }
+
+    return targetDays;
+  }
+
+  function renderPlanDetailView(planId) {
+    const planNames = {
+      '30days': 'Plan de 30 Días - Juan y Epístolas',
+      '60days': 'Plan de 60 Días - Los 4 Evangelios',
+      '90days': 'Plan de 90 Días - Nuevo Testamento',
+      '365days': 'Plan de 1 Año - Biblia Completa'
+    };
+    
+    elPlanDetailTitle.textContent = planNames[planId] || 'Plan de Lectura';
+    
+    const days = generatePlanDays(planId);
+    activePlanDays = days;
+    
+    elPlanDaysListContainer.innerHTML = '';
+    
+    let completedCount = 0;
+    
+    days.forEach(dayItem => {
+      // Un día está completado si todos sus capítulos asociados están marcados como leídos
+      let isDayCompleted = dayItem.chapters.length > 0;
+      dayItem.chapters.forEach(c => {
+        const key = `bible_read_${c.book}_${c.chapter}`;
+        if (localStorage.getItem(key) !== 'true') {
+          isDayCompleted = false;
+        }
+      });
+      if (dayItem.chapters.length === 0) {
+        // Si no hay lecturas, está completado por defecto si el usuario lo marca, o siempre si es día de reflexión
+        const reflectionKey = `plan_reflection_read_${planId}_day_${dayItem.day}`;
+        isDayCompleted = localStorage.getItem(reflectionKey) === 'true';
+      }
+      
+      if (isDayCompleted) completedCount++;
+
+      const row = document.createElement('div');
+      row.className = 'plan-day-row';
+      
+      row.innerHTML = `
+        <div class="plan-day-checkbox-wrapper ${isDayCompleted ? 'completed' : ''}" aria-label="Marcar completado"></div>
+        <div class="plan-day-info">
+          <span class="plan-day-number">Día ${dayItem.day}</span>
+          <span class="plan-day-target">${dayItem.label}</span>
+        </div>
+      `;
+
+      // Clic en el checkbox: alterna completado
+      const checkbox = row.querySelector('.plan-day-checkbox-wrapper');
+      checkbox.addEventListener('click', (e) => {
+        e.stopPropagation(); // Evitar abrir la lectura
+        togglePlanDayComplete(planId, dayItem, isDayCompleted);
+      });
+
+      // Clic en la fila: abre el lector para el primer capítulo del día
+      row.addEventListener('click', () => {
+        if (dayItem.chapters.length > 0) {
+          const first = dayItem.chapters[0];
+          const foundBook = bibleBooks.find(b => b.name === first.book);
+          if (foundBook) {
+            returnToViewAfterReader = 'plan';
+            openChapter(foundBook, first.chapter);
+          }
+        } else {
+          // Si es día de reflexión
+          togglePlanDayComplete(planId, dayItem, isDayCompleted);
+        }
+      });
+
+      elPlanDaysListContainer.appendChild(row);
+    });
+
+    // Calcular progreso
+    const totalDays = days.length;
+    const progressPercent = Math.round((completedCount / totalDays) * 100);
+    
+    elPlanDetailProgressLabel.textContent = `Progreso: ${completedCount} de ${totalDays} días (${progressPercent}%)`;
+    elPlanDetailProgressFill.style.width = `${progressPercent}%`;
+
+    showReadingSubView('reading-plan-detail-view');
+  }
+
+  function togglePlanDayComplete(planId, dayItem, currentlyCompleted) {
+    const newState = !currentlyCompleted;
+    
+    if (dayItem.chapters.length > 0) {
+      // Marcar/Desmarcar todas las lecturas de ese día
+      dayItem.chapters.forEach(c => {
+        const key = `bible_read_${c.book}_${c.chapter}`;
+        if (newState) {
+          localStorage.setItem(key, 'true');
+        } else {
+          localStorage.removeItem(key);
+        }
+      });
+    } else {
+      // Guardar reflexión día en localstorage
+      const reflectionKey = `plan_reflection_read_${planId}_day_${dayItem.day}`;
+      if (newState) {
+        localStorage.setItem(reflectionKey, 'true');
+      } else {
+        localStorage.removeItem(reflectionKey);
+      }
+    }
+
+    renderPlanDetailView(planId);
+  }
+
+  btnResetPlan.addEventListener('click', () => {
+    if (!currentPlanSelected) return;
+    if (confirm('¿Estás seguro de que deseas reiniciar el progreso de este plan de lectura? Todo el historial de este plan se borrará.')) {
+      const days = activePlanDays;
+      days.forEach(dayItem => {
+        dayItem.chapters.forEach(c => {
+          localStorage.removeItem(`bible_read_${c.book}_${c.chapter}`);
+        });
+        localStorage.removeItem(`plan_reflection_read_${currentPlanSelected}_day_${dayItem.day}`);
+      });
+      renderPlanDetailView(currentPlanSelected);
+    }
+  });
+
+  btnBackToPlans.addEventListener('click', () => {
+    showReadingSubView('reading-home-view');
+    updatePlansGridProgress();
+  });
+
+  // Actualizar el progreso en la pantalla principal (rejilla de planes)
+  function updatePlansGridProgress() {
+    document.querySelectorAll('.plan-card').forEach(card => {
+      const planId = card.getAttribute('data-plan-id');
+      const startBtn = card.querySelector('.btn-start-plan');
+      const progressWrapper = card.querySelector('.plan-progress-wrapper');
+      
+      const isStarted = localStorage.getItem(`devocional_plan_${planId}_started`) === 'true';
+      
+      if (isStarted) {
+        progressWrapper.style.display = 'block';
+        startBtn.textContent = 'Continuar';
+        startBtn.classList.remove('btn-primary');
+        startBtn.classList.add('btn-secondary');
+        
+        // Calcular porcentaje completado
+        const days = generatePlanDays(planId);
+        let completedCount = 0;
+        days.forEach(dayItem => {
+          let isDayCompleted = dayItem.chapters.length > 0;
+          dayItem.chapters.forEach(c => {
+            if (localStorage.getItem(`bible_read_${c.book}_${c.chapter}`) !== 'true') {
+              isDayCompleted = false;
+            }
+          });
+          if (dayItem.chapters.length === 0) {
+            isDayCompleted = localStorage.getItem(`plan_reflection_read_${planId}_day_${dayItem.day}`) === 'true';
+          }
+          if (isDayCompleted) completedCount++;
+        });
+
+        const percent = Math.round((completedCount / days.length) * 100);
+        card.querySelector('.plan-progress-fill').style.width = `${percent}%`;
+        card.querySelector('.plan-progress-text').textContent = `${percent}% completado`;
+      } else {
+        progressWrapper.style.display = 'none';
+        startBtn.textContent = 'Comenzar';
+        startBtn.classList.remove('btn-secondary');
+        startBtn.classList.add('btn-primary');
+      }
+    });
+  }
+
+  // Ejecución inicial de actualizar planes
+  updatePlansGridProgress();
+
 });

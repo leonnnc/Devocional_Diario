@@ -683,9 +683,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --- 8. REPRODUCTOR DE RADIO FLOTANTE ---
+  // --- 8. REPRODUCTOR DE RADIO Y MÚSICA FLOTANTE ---
   let radioAudio = null;
   let isRadioPlaying = false;
+  let musicAudio = null;
+  let activeAudioType = 'none'; // 'none', 'radio', 'music'
+  let currentMusicTrack = null;
 
   // Toggle de la barra flotante desde el encabezado
   btnRadioToggle.addEventListener('click', () => {
@@ -718,35 +721,66 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.remove('radio-bar-open');
   }
 
-  // Lógica del reproductor de Audio
+  // Lógica del reproductor de Audio (Radio y Música)
   btnRadioPlay.addEventListener('click', () => {
-    if (!radioAudio) {
-      radioAudio = new Audio('https://stream.zeno.fm/f2etpuit0h1uv');
-      radioAudio.crossOrigin = 'anonymous';
-      radioAudio.volume = radioVolumeSlider.value / 100;
-    }
-
-    if (isRadioPlaying) {
-      radioAudio.pause();
-      isRadioPlaying = false;
-      btnRadioPlay.innerHTML = '<span class="play-icon">▶</span>';
-      equalizerBars.classList.remove('playing');
-      radioStatusText.textContent = "Radio pausada";
-    } else {
-      radioStatusText.textContent = "Sintonizando...";
-      radioAudio.play().then(() => {
-        isRadioPlaying = true;
-        btnRadioPlay.innerHTML = '<span class="play-icon">⏸</span>';
-        equalizerBars.classList.add('playing');
-        radioStatusText.textContent = "Escuchando en vivo 📻";
-        // Si la barra está oculta, forzar mostrarla
-        if (!floatingRadioBar.classList.contains('show')) {
-          showRadioBar();
+    if (activeAudioType === 'music') {
+      if (musicAudio) {
+        if (musicAudio.paused) {
+          musicAudio.play().then(() => {
+            btnRadioPlay.innerHTML = '<span class="play-icon">⏸</span>';
+            equalizerBars.classList.add('playing');
+            radioStatusText.textContent = currentMusicTrack ? currentMusicTrack.title : "Música activa";
+            updateMusicListPlayingState();
+          }).catch(err => {
+            console.error("Error al reanudar música:", err);
+          });
+        } else {
+          musicAudio.pause();
+          btnRadioPlay.innerHTML = '<span class="play-icon">▶</span>';
+          equalizerBars.classList.remove('playing');
+          radioStatusText.textContent = currentMusicTrack ? `${currentMusicTrack.title} (Pausado)` : "Música pausada";
+          updateMusicListPlayingState();
         }
-      }).catch(err => {
-        console.error("Fallo al sintonizar radio:", err);
-        radioStatusText.textContent = "Señal no disponible";
-      });
+      }
+    } else {
+      // Comportamiento de Radio existente
+      activeAudioType = 'radio';
+      const stationNameEl = document.querySelector('.radio-bar-station-name');
+      if (stationNameEl) stationNameEl.textContent = "Radio Cristiana";
+
+      // Detener música si está activa
+      if (musicAudio) {
+        musicAudio.pause();
+        updateMusicListPlayingState();
+      }
+
+      if (!radioAudio) {
+        radioAudio = new Audio('https://stream.zeno.fm/f2etpuit0h1uv');
+        radioAudio.crossOrigin = 'anonymous';
+        radioAudio.volume = radioVolumeSlider.value / 100;
+      }
+
+      if (isRadioPlaying) {
+        radioAudio.pause();
+        isRadioPlaying = false;
+        btnRadioPlay.innerHTML = '<span class="play-icon">▶</span>';
+        equalizerBars.classList.remove('playing');
+        radioStatusText.textContent = "Radio pausada";
+      } else {
+        radioStatusText.textContent = "Sintonizando...";
+        radioAudio.play().then(() => {
+          isRadioPlaying = true;
+          btnRadioPlay.innerHTML = '<span class="play-icon">⏸</span>';
+          equalizerBars.classList.add('playing');
+          radioStatusText.textContent = "Escuchando en vivo 📻";
+          if (!floatingRadioBar.classList.contains('show')) {
+            showRadioBar();
+          }
+        }).catch(err => {
+          console.error("Fallo al sintonizar radio:", err);
+          radioStatusText.textContent = "Señal no disponible";
+        });
+      }
     }
   });
 
@@ -754,6 +788,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const vol = radioVolumeSlider.value / 100;
     if (radioAudio) {
       radioAudio.volume = vol;
+    }
+    if (musicAudio) {
+      musicAudio.volume = vol;
     }
   });
 
@@ -925,13 +962,29 @@ document.addEventListener('DOMContentLoaded', () => {
   // LÓGICA DE LA SECCIÓN DE LECTURA Y PLANES DE LECTURA
   // ==========================================================================
 
-  // 1. Elementos del DOM de Lectura y Historias
+  // 1. Elementos del DOM de Lectura, Historias y Recursos
   const tabDevotional = document.getElementById('tab-devotional');
   const tabLectura = document.getElementById('tab-lectura');
   const tabHistorias = document.getElementById('tab-historias');
+  const tabRecursos = document.getElementById('tab-recursos');
   const sectionDevotional = document.getElementById('section-devotional');
   const sectionLectura = document.getElementById('section-lectura');
   const sectionHistorias = document.getElementById('section-historias');
+  const sectionRecursos = document.getElementById('section-recursos');
+
+  const cardRecursosVideos = document.getElementById('card-recursos-videos');
+  const cardRecursosMusica = document.getElementById('card-recursos-musica');
+  const recursosHomeView = document.getElementById('recursos-home-view');
+  const recursosChannelView = document.getElementById('recursos-channel-view');
+  const recursosMusicView = document.getElementById('recursos-music-view');
+  const btnBackToRecursos = document.getElementById('btn-back-to-recursos');
+  const btnBackMusicToRecursos = document.getElementById('btn-back-music-to-recursos');
+  const videosGridContainer = document.getElementById('videos-grid-container');
+  const musicTracksList = document.getElementById('music-tracks-list');
+  const youtubeModal = document.getElementById('youtube-modal');
+  const btnYoutubeModalClose = document.getElementById('btn-youtube-modal-close');
+  const youtubeIframe = document.getElementById('youtube-iframe');
+  const youtubeModalTitle = document.getElementById('youtube-modal-title');
 
   const btnCloseStories = document.getElementById('btn-close-stories');
   const filterStoryAll = document.getElementById('filter-story-all');
@@ -1066,16 +1119,22 @@ document.addEventListener('DOMContentLoaded', () => {
     switchMainTab('historias');
   });
 
+  tabRecursos.addEventListener('click', () => {
+    switchMainTab('recursos');
+  });
+
   function switchMainTab(tabId) {
     // Restablecer todas las pestañas activas
     tabDevotional.classList.remove('active');
     tabLectura.classList.remove('active');
     tabHistorias.classList.remove('active');
+    tabRecursos.classList.remove('active');
     
     // Ocultar todas las secciones principales
     sectionDevotional.style.display = 'none';
     sectionLectura.style.display = 'none';
     sectionHistorias.style.display = 'none';
+    sectionRecursos.style.display = 'none';
 
     if (tabId === 'devotional') {
       tabDevotional.classList.add('active');
@@ -1090,6 +1149,10 @@ document.addEventListener('DOMContentLoaded', () => {
       sectionHistorias.style.display = 'block';
       // Cargar e inicializar historias
       renderStories('all');
+    } else if (tabId === 'recursos') {
+      tabRecursos.classList.add('active');
+      sectionRecursos.style.display = 'block';
+      showRecursosSubView('recursos-home-view');
     }
   }
 
@@ -2252,6 +2315,290 @@ document.addEventListener('DOMContentLoaded', () => {
       openChapter(foundBook, chapterNum);
     } else {
       console.warn(`No se pudo encontrar el libro: ${bookName}`);
+    }
+  }
+
+  // ==========================================================================
+  // LÓGICA DE LA SECCIÓN DE RECURSOS (VIDEOS Y MÚSICA)
+  // ==========================================================================
+
+  // Base de datos de videos de YouTube (Catedral de Fe)
+  const youtubeVideos = [
+    {
+      id: "9c3V15O0D9M",
+      title: "Transmisión en Vivo - Servicio de Domingo",
+      duration: "En Vivo",
+      views: "1.2K en vivo",
+      thumbnail: "https://images.unsplash.com/photo-1515162305285-0293e4767cc2?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      id: "dQw4w9WgXcQ",
+      title: "El Poder de la Oración - Prédica Especial",
+      duration: "45:12",
+      views: "15K vistas",
+      thumbnail: "https://images.unsplash.com/photo-1507692049790-de58290a4334?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      id: "3AtDnEC4zak",
+      title: "Alabanza y Adoración - Catedral de Fe",
+      duration: "1:12:05",
+      views: "28K vistas",
+      thumbnail: "https://images.unsplash.com/photo-1445251836269-d158e0071760?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      id: "yG74A69G0gM",
+      title: "Estudio Bíblico: El Camino de la Fe",
+      duration: "38:40",
+      views: "8.4K vistas",
+      thumbnail: "https://images.unsplash.com/photo-1504052434569-70ad58565b90?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      id: "W_g-L0PqD5U",
+      title: "Devocional Matutino: Renueva tus Fuerzas",
+      duration: "15:20",
+      views: "5.1K vistas",
+      thumbnail: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      id: "g3E1mPzC78w",
+      title: "Tiempo de Clamor y Milagros",
+      duration: "58:10",
+      views: "12K vistas",
+      thumbnail: "https://images.unsplash.com/photo-1478147427282-58a87a120781?q=80&w=600&auto=format&fit=crop"
+    }
+  ];
+
+  // Base de datos de pistas instrumentales
+  const instrumentalTracks = [
+    {
+      id: "track1",
+      title: "Oración en el Jardín",
+      author: "Piano Relajante",
+      duration: "5:02",
+      url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+    },
+    {
+      id: "track2",
+      title: "Ríos de Agua Viva",
+      author: "Guitarra Acústica",
+      duration: "7:05",
+      url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+    },
+    {
+      id: "track3",
+      title: "Paz Perfecta",
+      author: "Orquesta de Cuerdas",
+      duration: "5:44",
+      url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+    },
+    {
+      id: "track4",
+      title: "Sendas de Justicia",
+      author: "Flauta y Arpa",
+      duration: "5:02",
+      url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
+    }
+  ];
+
+  // Navegación entre sub-vistas de Recursos
+  cardRecursosVideos.addEventListener('click', () => {
+    showRecursosSubView('recursos-channel-view');
+    renderVideosGrid();
+  });
+
+  cardRecursosMusica.addEventListener('click', () => {
+    showRecursosSubView('recursos-music-view');
+    renderMusicTracks();
+  });
+
+  btnBackToRecursos.addEventListener('click', () => {
+    showRecursosSubView('recursos-home-view');
+  });
+
+  btnBackMusicToRecursos.addEventListener('click', () => {
+    showRecursosSubView('recursos-home-view');
+  });
+
+  function showRecursosSubView(viewId) {
+    const views = [recursosHomeView, recursosChannelView, recursosMusicView];
+    views.forEach(v => {
+      if (v.id === viewId) {
+        v.style.display = 'block';
+      } else {
+        v.style.display = 'none';
+      }
+    });
+  }
+
+  // Renderizar la grilla de videos de YouTube
+  function renderVideosGrid() {
+    videosGridContainer.innerHTML = '';
+    youtubeVideos.forEach(video => {
+      const card = document.createElement('div');
+      card.className = 'video-card';
+      card.innerHTML = `
+        <div class="video-thumbnail-container">
+          <img class="video-thumbnail" src="${video.thumbnail}" alt="${video.title}">
+          <span class="video-duration-badge">${video.duration}</span>
+          <div class="video-play-overlay">
+            <span class="video-play-icon">▶</span>
+          </div>
+        </div>
+        <div class="video-card-body">
+          <h4 class="video-card-title">${video.title}</h4>
+          <div class="video-card-meta">
+            <span class="video-channel-name">Catedral de Fe</span>
+            <span class="video-views-badge">${video.views}</span>
+          </div>
+        </div>
+      `;
+      card.addEventListener('click', () => {
+        openYoutubeModal(video);
+      });
+      videosGridContainer.appendChild(card);
+    });
+  }
+
+  // Lógica del modal de YouTube
+  function openYoutubeModal(video) {
+    youtubeModalTitle.textContent = video.title;
+    youtubeIframe.src = `https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0`;
+    youtubeModal.classList.add('open');
+
+    // Pausar audio de fondo si está sonando para no traslapar audio
+    if (radioAudio && isRadioPlaying) {
+      radioAudio.pause();
+      isRadioPlaying = false;
+      btnRadioPlay.innerHTML = '<span class="play-icon">▶</span>';
+      equalizerBars.classList.remove('playing');
+      radioStatusText.textContent = "Radio pausada";
+    }
+    if (musicAudio && !musicAudio.paused) {
+      musicAudio.pause();
+      btnRadioPlay.innerHTML = '<span class="play-icon">▶</span>';
+      equalizerBars.classList.remove('playing');
+      radioStatusText.textContent = currentMusicTrack ? `${currentMusicTrack.title} (Pausado)` : "Música pausada";
+      updateMusicListPlayingState();
+    }
+  }
+
+  function closeYoutubeModal() {
+    youtubeModal.classList.remove('open');
+    youtubeIframe.src = ''; // Limpiar el src para detener el video
+  }
+
+  btnYoutubeModalClose.addEventListener('click', closeYoutubeModal);
+
+  youtubeModal.addEventListener('click', (e) => {
+    if (e.target === youtubeModal) {
+      closeYoutubeModal();
+    }
+  });
+
+  // Renderizar la lista de música instrumental
+  function renderMusicTracks() {
+    musicTracksList.innerHTML = '';
+    instrumentalTracks.forEach(track => {
+      const isCurrent = currentMusicTrack && currentMusicTrack.id === track.id;
+      const isPlaying = isCurrent && musicAudio && !musicAudio.paused;
+
+      const trackItem = document.createElement('div');
+      trackItem.className = `music-track-item ${isCurrent ? 'active' : ''} ${isPlaying ? 'playing' : ''}`;
+      trackItem.innerHTML = `
+        <div class="track-play-btn-wrapper">
+          <button class="btn-track-play" aria-label="${isPlaying ? 'Pausar' : 'Reproducir'}">
+            <span class="track-icon">${isPlaying ? '⏸' : '▶'}</span>
+          </button>
+        </div>
+        <div class="track-info-wrapper">
+          <h4 class="track-title-text">${track.title}</h4>
+          <span class="track-author-text">${track.author}</span>
+        </div>
+        <div class="track-duration-wrapper">
+          <span class="track-duration-text">${track.duration}</span>
+        </div>
+      `;
+
+      const playBtn = trackItem.querySelector('.btn-track-play');
+      const infoWrapper = trackItem.querySelector('.track-info-wrapper');
+
+      const togglePlay = () => {
+        if (isCurrent) {
+          if (musicAudio.paused) {
+            musicAudio.play().then(() => {
+              btnRadioPlay.innerHTML = '<span class="play-icon">⏸</span>';
+              equalizerBars.classList.add('playing');
+              radioStatusText.textContent = track.title;
+              renderMusicTracks();
+            }).catch(err => {
+              console.error("Error al reproducir música:", err);
+            });
+          } else {
+            musicAudio.pause();
+            btnRadioPlay.innerHTML = '<span class="play-icon">▶</span>';
+            equalizerBars.classList.remove('playing');
+            radioStatusText.textContent = `${track.title} (Pausado)`;
+            renderMusicTracks();
+          }
+        } else {
+          playMusicTrack(track);
+          renderMusicTracks();
+        }
+      };
+
+      playBtn.addEventListener('click', togglePlay);
+      infoWrapper.addEventListener('click', togglePlay);
+
+      musicTracksList.appendChild(trackItem);
+    });
+  }
+
+  // Reproducir pista instrumental específica en el reproductor del footer
+  function playMusicTrack(track) {
+    // 1. Apagar radio si está sonando
+    if (radioAudio && isRadioPlaying) {
+      radioAudio.pause();
+      isRadioPlaying = false;
+    }
+
+    // 2. Apagar música previa si existe
+    if (musicAudio) {
+      musicAudio.pause();
+    }
+
+    currentMusicTrack = track;
+    musicAudio = new Audio(track.url);
+    musicAudio.crossOrigin = 'anonymous';
+    musicAudio.volume = radioVolumeSlider.value / 100;
+    musicAudio.loop = true;
+
+    activeAudioType = 'music';
+
+    // UI cargando
+    const stationNameEl = document.querySelector('.radio-bar-station-name');
+    if (stationNameEl) stationNameEl.textContent = "Música Instrumental";
+    radioStatusText.textContent = `Cargando ${track.title}...`;
+    equalizerBars.classList.remove('playing');
+    btnRadioPlay.innerHTML = '<span class="play-icon">▶</span>';
+
+    musicAudio.play().then(() => {
+      btnRadioPlay.innerHTML = '<span class="play-icon">⏸</span>';
+      equalizerBars.classList.add('playing');
+      radioStatusText.textContent = track.title;
+      // Mostrar barra flotante si está oculta
+      if (!floatingRadioBar.classList.contains('show')) {
+        showRadioBar();
+      }
+    }).catch(err => {
+      console.error("Fallo al reproducir música:", err);
+      radioStatusText.textContent = "Error de reproducción";
+    });
+  }
+
+  // Actualizar el estado de reproducción visual en la lista de música
+  function updateMusicListPlayingState() {
+    if (recursosMusicView.style.display === 'block') {
+      renderMusicTracks();
     }
   }
 

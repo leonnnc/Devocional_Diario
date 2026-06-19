@@ -34,7 +34,7 @@
         <button id="tab-historias" class="nav-tab">
           <span class="nav-tab-icon">🛡️</span> Historias
         </button>
-        <button id="tab-recursos" class="nav-tab disabled" disabled title="Próximamente">
+        <button id="tab-recursos" class="nav-tab">
           <span class="nav-tab-icon">🎥</span> Recursos
         </button>
         <button id="tab-buscar" class="nav-tab disabled" disabled title="Próximamente">
@@ -315,6 +315,74 @@
       </div>
     </div> <!-- Fin Sección Historias -->
 
+    <!-- Sección de Recursos (Videos y Música) -->
+    <div id="section-recursos" class="app-section" style="display: none;">
+      <!-- Vista de Inicio (Home de Recursos) -->
+      <div id="recursos-home-view" class="recursos-view active">
+        <div class="recursos-header">
+          <h2 class="recursos-headline">Recursos Espirituales</h2>
+        </div>
+        <div class="recursos-categories-grid">
+          <div id="card-recursos-videos" class="recursos-category-card">
+            <div class="card-icon">🎥</div>
+            <div class="card-content">
+              <h3>Canales de Video</h3>
+              <p>Transmisiones en vivo, cultos y prédicas de Catedral de Fe CDF.</p>
+            </div>
+          </div>
+          <div id="card-recursos-musica" class="recursos-category-card">
+            <div class="card-icon">🎵</div>
+            <div class="card-content">
+              <h3>Música para la Lectura</h3>
+              <p>Melodías e instrumentales relajantes para acompañar tu lectura de la Biblia.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vista Detalle de Canal (Videos) -->
+      <div id="recursos-channel-view" class="recursos-view" style="display: none;">
+        <div class="channel-header-wrapper">
+          <button id="btn-back-to-recursos" class="btn-back-recursos">
+            <span class="back-icon">←</span> Volver a Recursos
+          </button>
+          <div class="channel-info-header">
+            <div class="channel-avatar">CC</div>
+            <div class="channel-meta">
+              <h2 class="channel-title">Catedral de Fe CDF</h2>
+              <p class="channel-handle">@CatedraldeFeCDF</p>
+            </div>
+          </div>
+        </div>
+        <hr class="channel-divider">
+        <div id="videos-grid-container" class="videos-grid">
+          <!-- Se cargan dinámicamente -->
+        </div>
+      </div>
+
+      <!-- Vista Detalle de Música -->
+      <div id="recursos-music-view" class="recursos-view" style="display: none;">
+        <div class="channel-header-wrapper">
+          <button id="btn-back-music-to-recursos" class="btn-back-recursos">
+            <span class="back-icon">←</span> Volver a Recursos
+          </button>
+          <div class="channel-info-header">
+            <div class="channel-avatar music-avatar">🎵</div>
+            <div class="channel-meta">
+              <h2 class="channel-title">Música Instrumental</h2>
+              <p class="channel-handle">Melodías para meditar y leer la Biblia</p>
+            </div>
+          </div>
+        </div>
+        <hr class="channel-divider">
+        <div class="music-list-container">
+          <div id="music-tracks-list" class="music-tracks-list">
+            <!-- Se cargan dinámicamente -->
+          </div>
+        </div>
+      </div>
+    </div> <!-- Fin Sección Recursos -->
+
   </main>
 
   <!-- Panel Lateral (Historial Drawer) -->
@@ -353,6 +421,20 @@
         <button id="btn-modal-load" class="btn btn-primary">
           <span class="icon">📖</span> Abrir en el Portal
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para reproducir Video de YouTube -->
+  <div id="youtube-modal" class="modal-overlay">
+    <div class="modal-container youtube-modal-container">
+      <button id="btn-youtube-modal-close" class="modal-close" aria-label="Cerrar reproductor">&times;</button>
+      <div class="modal-header">
+        <span class="modal-badge youtube-badge">Reproductor de Video</span>
+        <h3 id="youtube-modal-title" class="modal-headline">Cargando video...</h3>
+      </div>
+      <div class="youtube-video-wrapper">
+        <iframe id="youtube-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
       </div>
     </div>
   </div>

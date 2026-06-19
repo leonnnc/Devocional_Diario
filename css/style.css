@@ -1385,8 +1385,14 @@ body.theme-dark .nav-tab.active {
 
 .plans-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .plans-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .plan-card {

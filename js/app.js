@@ -1741,6 +1741,258 @@ document.addEventListener('DOMContentLoaded', () => {
       refs: ["Génesis 11:1-9"]
     },
     {
+      title: "El Llamado de Abram",
+      testament: "antiguo",
+      category: "PATRIARCAS",
+      desc: "Dios llama a Abram a dejar su tierra y le promete hacer de él una gran nación.",
+      refs: ["Génesis 12:1-9"]
+    },
+    {
+      title: "Melquisedec y Abram",
+      testament: "antiguo",
+      category: "PATRIARCAS",
+      desc: "Abram es bendecido por Melquisedec, rey de Salem y sacerdote del Dios Altísimo.",
+      refs: ["Génesis 14:17-24"]
+    },
+    {
+      title: "Destrucción de Sodoma",
+      testament: "antiguo",
+      category: "PATRIARCAS",
+      desc: "Dios destruye las ciudades de Sodoma y Gomorra por su gran maldad, rescatando a Lot.",
+      refs: ["Génesis 19:1-29"]
+    },
+    {
+      title: "El Nacimiento de Isaac",
+      testament: "antiguo",
+      category: "PATRIARCAS",
+      desc: "Dios cumple su promesa a Abraham y Sara en su vejez, dándoles a su hijo Isaac.",
+      refs: ["Génesis 21:1-8"]
+    },
+    {
+      title: "La Prueba de Abraham",
+      testament: "antiguo",
+      category: "PATRIARCAS",
+      desc: "Dios prueba la fe de Abraham al pedirle que sacrifique a su único hijo Isaac.",
+      refs: ["Génesis 22:1-19"]
+    },
+    {
+      title: "El Sueño de Jacob",
+      testament: "antiguo",
+      category: "PATRIARCAS",
+      desc: "Jacob sueña con una escalera celestial por la que suben y bajan ángeles.",
+      refs: ["Génesis 28:10-22"]
+    },
+    {
+      title: "Jacob lucha con el Ángel",
+      testament: "antiguo",
+      category: "PATRIARCAS",
+      desc: "Jacob lucha toda la noche con un varón celestial y recibe el nombre de Israel.",
+      refs: ["Génesis 32:22-32"]
+    },
+    {
+      title: "José es vendido",
+      testament: "antiguo",
+      category: "PATRIARCAS",
+      desc: "Los hermanos de José, celosos de sus sueños, lo venden como esclavo a Egipto.",
+      refs: ["Génesis 37:1-36"]
+    },
+    {
+      title: "José interpreta sueños",
+      testament: "antiguo",
+      category: "EGIPTO",
+      desc: "José interpreta los sueños del Faraón y es nombrado gobernador de todo Egipto.",
+      refs: ["Génesis 41:1-45"]
+    },
+    {
+      title: "Moisés en la cesta",
+      testament: "antiguo",
+      category: "ÉXODO",
+      desc: "Moisés es salvado de la muerte al ser colocado en una cesta en el río Nilo.",
+      refs: ["Éxodo 2:1-10"]
+    },
+    {
+      title: "La Zarza Ardiente",
+      testament: "antiguo",
+      category: "ÉXODO",
+      desc: "Dios se le aparece a Moisés en una zarza ardiente y lo envía a liberar a su pueblo.",
+      refs: ["Éxodo 3:1-22"]
+    },
+    {
+      title: "Las Diez Plagas",
+      testament: "antiguo",
+      category: "ÉXODO",
+      desc: "Dios envía plagas sobre Egipto para obligar al Faraón a liberar a Israel.",
+      refs: ["Éxodo 7:14-25", "Éxodo 8:1-20"]
+    },
+    {
+      title: "La Pascua y la Salida",
+      testament: "antiguo",
+      category: "ÉXODO",
+      desc: "Israel celebra la primera pascua antes de salir de la esclavitud de Egipto.",
+      refs: ["Éxodo 12:1-42"]
+    },
+    {
+      title: "El Paso del Mar Rojo",
+      testament: "antiguo",
+      category: "ÉXODO",
+      desc: "Dios abre las aguas del Mar Rojo para que Israel pase a pie en seco.",
+      refs: ["Éxodo 14:1-31"]
+    },
+    {
+      title: "El Maná del Cielo",
+      testament: "antiguo",
+      category: "DESIERTO",
+      desc: "Dios provee pan del cielo diariamente para alimentar a su pueblo en el desierto.",
+      refs: ["Éxodo 16:1-36"]
+    },
+    {
+      title: "Los Diez Mandamientos",
+      testament: "antiguo",
+      category: "LEY",
+      desc: "Dios entrega a Moisés las tablas de la Ley en el monte Sinaí.",
+      refs: ["Éxodo 20:1-21"]
+    },
+    {
+      title: "El Becerro de Oro",
+      testament: "antiguo",
+      category: "REBELIÓN",
+      desc: "El pueblo de Israel fabrica un becerro de oro para adorarlo en ausencia de Moisés.",
+      refs: ["Éxodo 32:1-35"]
+    },
+    {
+      title: "Los Doce Espías",
+      testament: "antiguo",
+      category: "DESIERTO",
+      desc: "Moisés envía espías a Canaán; diez traen mal reporte y solo dos confían en Dios.",
+      refs: ["Números 13:1-33"]
+    },
+    {
+      title: "La Serpiente de Bronce",
+      testament: "antiguo",
+      category: "DESIERTO",
+      desc: "Dios manda a Moisés levantar una serpiente de bronce para sanar a los mordidos.",
+      refs: ["Números 21:4-9"]
+    },
+    {
+      title: "La Mula de Balaam",
+      testament: "antiguo",
+      category: "DESIERTO",
+      desc: "Una mula habla a Balaam al ver al Ángel del Señor bloqueando su camino.",
+      refs: ["Números 22:21-38"]
+    },
+    {
+      title: "La Caída de Jericó",
+      testament: "antiguo",
+      category: "CONQUISTA",
+      desc: "Las murallas de Jericó caen después de que Israel marcha a su alrededor siete días.",
+      refs: ["Josué 6:1-27"]
+    },
+    {
+      title: "El Sol se detiene",
+      testament: "antiguo",
+      category: "CONQUISTA",
+      desc: "Josué ora a Dios y el sol se detiene sobre Gabaón para completar la victoria.",
+      refs: ["Josué 10:1-15"]
+    },
+    {
+      title: "El Llamado de Gedeón",
+      testament: "antiguo",
+      category: "JUECES",
+      desc: "El Ángel del Señor llama a Gedeón para liberar a Israel de los madianitas.",
+      refs: ["Jueces 6:11-40"]
+    },
+    {
+      title: "Sansón y Dalila",
+      testament: "antiguo",
+      category: "JUECES",
+      desc: "Sansón confía su secreto a Dalila, es capturado y finalmente derriba el templo filisteo.",
+      refs: ["Jueces 16:1-31"]
+    },
+    {
+      title: "El Llamado de Samuel",
+      testament: "antiguo",
+      category: "REINO",
+      desc: "Dios llama al joven Samuel por su nombre en el templo durante la noche.",
+      refs: ["1 Samuel 3:1-21"]
+    },
+    {
+      title: "David y Goliat",
+      testament: "antiguo",
+      category: "REINO",
+      desc: "El joven pastor David derrota al gigante filisteo Goliat usando una honda y fe.",
+      refs: ["1 Samuel 17:1-58"]
+    },
+    {
+      title: "David es coronado rey",
+      testament: "antiguo",
+      category: "REINO",
+      desc: "David es ungido rey sobre todo Israel, estableciendo a Jerusalén como capital.",
+      refs: ["2 Samuel 5:1-10"]
+    },
+    {
+      title: "El Juicio de Salomón",
+      testament: "antiguo",
+      category: "SABIDURÍA",
+      desc: "Salomón demuestra su sabiduría al juzgar la disputa entre dos madres por un bebé.",
+      refs: ["1 Reyes 3:16-28"]
+    },
+    {
+      title: "Elías y los profetas de Baal",
+      testament: "antiguo",
+      category: "PROFETAS",
+      desc: "Elías desafía a los profetas de Baal en el monte Carmelo, y fuego cae del cielo.",
+      refs: ["1 Reyes 18:20-40"]
+    },
+    {
+      title: "El Carro de Fuego",
+      testament: "antiguo",
+      category: "PROFETAS",
+      desc: "Elías es arrebatado al cielo en un torbellino con un carro y caballos de fuego.",
+      refs: ["2 Reyes 2:1-18"]
+    },
+    {
+      title: "Eliseo y la viuda",
+      testament: "antiguo",
+      category: "MILAGROS",
+      desc: "Eliseo multiplica el aceite de una viuda pobre para que pague sus deudas.",
+      refs: ["2 Reyes 4:1-7"]
+    },
+    {
+      title: "La Caída de Jerusalén",
+      testament: "antiguo",
+      category: "EXILIO",
+      desc: "Nabucodonosor destruye Jerusalén y lleva cautivo al pueblo a Babilonia.",
+      refs: ["2 Reyes 25:1-21"]
+    },
+    {
+      title: "El Horno de Fuego",
+      testament: "antiguo",
+      category: "EXILIO",
+      desc: "Sadrac, Mesac y Abed-nego son salvados de un horno ardiente por un ser celestial.",
+      refs: ["Daniel 3:1-30"]
+    },
+    {
+      title: "El Foso de los Leones",
+      testament: "antiguo",
+      category: "EXILIO",
+      desc: "Daniel es arrojado al foso de leones por orar a Dios, y un ángel los apacigua.",
+      refs: ["Daniel 6:1-28"]
+    },
+    {
+      title: "Jonás y el gran pez",
+      testament: "antiguo",
+      category: "PROFETAS",
+      desc: "Jonás huye de Dios y pasa tres días en el vientre de un gran pez.",
+      refs: ["Jonás 1:1-17", "Jonás 2:1-10"]
+    },
+    {
+      title: "Reconstrucción del Templo",
+      testament: "antiguo",
+      category: "RETORNO",
+      desc: "Los exiliados regresan a Jerusalén y reconstruyen los cimientos del templo.",
+      refs: ["Esdras 3:1-13"]
+    },
+    {
       title: "El Nacimiento de Jesús",
       testament: "nuevo",
       category: "JESUCRISTO",
@@ -1748,10 +2000,17 @@ document.addEventListener('DOMContentLoaded', () => {
       refs: ["Lucas 2:1-20", "Mateo 1:18-25"]
     },
     {
+      title: "La Visita de los Magos",
+      testament: "nuevo",
+      category: "JESUCRISTO",
+      desc: "Sabios del Oriente siguen una estrella para adorar y entregar regalos al niño Jesús.",
+      refs: ["Mateo 2:1-12"]
+    },
+    {
       title: "El Bautismo de Jesús",
       testament: "nuevo",
       category: "JESUCRISTO",
-      desc: "Juan el Bautista bautiza a Jesús en el río Jordán, y el Espíritu Santo desciende como paloma.",
+      desc: "Juan bautiza a Jesús en el Jordán, y el Espíritu Santo desciende como paloma.",
       refs: ["Mateo 3:13-17", "Marcos 1:9-11"]
     },
     {
@@ -1762,18 +2021,144 @@ document.addEventListener('DOMContentLoaded', () => {
       refs: ["Mateo 4:1-11", "Lucas 4:1-13"]
     },
     {
+      title: "El Primer Milagro en Caná",
+      testament: "nuevo",
+      category: "MILAGROS",
+      desc: "Jesús transforma el agua en vino de excelente calidad durante una boda.",
+      refs: ["Juan 2:1-12"]
+    },
+    {
+      title: "Jesús y Nicodemo",
+      testament: "nuevo",
+      category: "ENSEÑANZAS",
+      desc: "Jesús explica a Nicodemo la necesidad de nacer de nuevo por el Espíritu.",
+      refs: ["Juan 3:1-21"]
+    },
+    {
+      title: "La Mujer Samaritana",
+      testament: "nuevo",
+      category: "ENSEÑANZAS",
+      desc: "Jesús se revela a una mujer samaritana junto al pozo de Jacob.",
+      refs: ["Juan 4:1-42"]
+    },
+    {
+      title: "El Sermón del Monte",
+      testament: "nuevo",
+      category: "ENSEÑANZAS",
+      desc: "Jesús enseña las bienaventuranzas y el Padre Nuestro en una colina.",
+      refs: ["Mateo 5:1-48", "Mateo 6:1-34"]
+    },
+    {
+      title: "La Tempestad Calmada",
+      testament: "nuevo",
+      category: "MILAGROS",
+      desc: "Jesús reprende al viento y a las olas en el mar, trayendo gran calma.",
+      refs: ["Mateo 8:23-27"]
+    },
+    {
+      title: "La Hija de Jairo",
+      testament: "nuevo",
+      category: "MILAGROS",
+      desc: "Jesús resucita a la hija de doce años del principal de la sinagoga.",
+      refs: ["Marcos 5:21-43"]
+    },
+    {
+      title: "Multiplicación de Panes",
+      testament: "nuevo",
+      category: "MILAGROS",
+      desc: "Jesús alimenta a cinco mil hombres a partir de cinco panes y dos peces.",
+      refs: ["Juan 6:1-15"]
+    },
+    {
+      title: "Caminar sobre el Agua",
+      testament: "nuevo",
+      category: "MILAGROS",
+      desc: "Jesús camina sobre el mar durante la tormenta y salva a Pedro.",
+      refs: ["Mateo 14:22-33"]
+    },
+    {
+      title: "El Buen Samaritano",
+      testament: "nuevo",
+      category: "PARÁBOLAS",
+      desc: "Jesús enseña a través del samaritano que ayuda al hombre herido en el camino.",
+      refs: ["Lucas 10:25-37"]
+    },
+    {
+      title: "El Hijo Pródigo",
+      testament: "nuevo",
+      category: "PARÁBOLAS",
+      desc: "Jesús enseña sobre el perdón incondicional del padre al hijo arrepentido.",
+      refs: ["Lucas 15:11-32"]
+    },
+    {
+      title: "Resurrección de Lázaro",
+      testament: "nuevo",
+      category: "MILAGROS",
+      desc: "Jesús resucita a su amigo Lázaro tras llevar cuatro días fallecido.",
+      refs: ["Juan 11:1-44"]
+    },
+    {
+      title: "La Entrada Triunfal",
+      testament: "nuevo",
+      category: "PASIÓN",
+      desc: "Jesús entra a Jerusalén en un pollino mientras la multitud lo aclama.",
+      refs: ["Mateo 21:1-11"]
+    },
+    {
+      title: "La Última Cena",
+      testament: "nuevo",
+      category: "PASIÓN",
+      desc: "Jesús celebra la Pascua con sus discípulos e instituye la Santa Cena.",
+      refs: ["Lucas 22:7-38"]
+    },
+    {
+      title: "El Arresto en Getsemaní",
+      testament: "nuevo",
+      category: "PASIÓN",
+      desc: "Jesús ora en el huerto y es traicionado por Judas con un beso.",
+      refs: ["Mateo 26:36-56"]
+    },
+    {
       title: "La Crucifixión y Muerte",
       testament: "nuevo",
-      category: "JESUCRISTO",
-      desc: "Jesús es crucificado en el Calvario para el perdón de los pecados de la humanidad.",
+      category: "PASIÓN",
+      desc: "Jesús es crucificado en el Calvario para la redención de la humanidad.",
       refs: ["Lucas 23:26-49", "Juan 19:16-37"]
     },
     {
       title: "La Resurrección Victoriosa",
       testament: "nuevo",
-      category: "JESUCRISTO",
-      desc: "Al tercer día, la tumba se encuentra vacía y Jesús resucita victorioso sobre la muerte.",
+      category: "PASCUA",
+      desc: "Al tercer día, la tumba se encuentra vacía y Jesús resucita glorioso.",
       refs: ["Mateo 28:1-10", "Lucas 24:1-12"]
+    },
+    {
+      title: "La Ascensión",
+      testament: "nuevo",
+      category: "PASCUA",
+      desc: "Jesús asciende al cielo ante sus discípulos con la promesa de regresar.",
+      refs: ["Hechos 1:1-11"]
+    },
+    {
+      title: "Pentecostés",
+      testament: "nuevo",
+      category: "IGLESIA",
+      desc: "El Espíritu Santo desciende sobre los creyentes en forma de lenguas de fuego.",
+      refs: ["Hechos 2:1-41"]
+    },
+    {
+      title: "La Conversión de Saulo",
+      testament: "nuevo",
+      category: "IGLESIA",
+      desc: "Saulo es cegado por una luz celestial en el camino y es llamado a ser apóstol.",
+      refs: ["Hechos 9:1-22"]
+    },
+    {
+      title: "La Nueva Jerusalén",
+      testament: "nuevo",
+      category: "APOCALIPSIS",
+      desc: "Juan contempla la santa ciudad celestial descendiendo de Dios al final de los tiempos.",
+      refs: ["Apocalipsis 21:1-27"]
     }
   ];
 

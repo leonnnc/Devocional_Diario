@@ -756,7 +756,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (!radioAudio) {
         radioAudio = new Audio('https://stream.zeno.fm/f2etpuit0h1uv');
-        radioAudio.crossOrigin = 'anonymous';
         radioAudio.volume = radioVolumeSlider.value / 100;
       }
 
@@ -2568,7 +2567,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     currentMusicTrack = track;
     musicAudio = new Audio(track.url);
-    musicAudio.crossOrigin = 'anonymous';
     musicAudio.volume = radioVolumeSlider.value / 100;
     musicAudio.loop = true;
 

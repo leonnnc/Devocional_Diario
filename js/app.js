@@ -2371,31 +2371,38 @@ document.addEventListener('DOMContentLoaded', () => {
   const instrumentalTracks = [
     {
       id: "track1",
-      title: "Oración en el Jardín",
-      author: "Piano Relajante",
-      duration: "5:02",
-      url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+      title: "30 Alabanzas de Adoración (Piano)",
+      author: "Pistas Cristianas de Meditación",
+      duration: "1:36:00",
+      url: "https://archive.org/download/y-2mate.com-alone-with-god-3-hour-prayer-time-music-christian-meditation-music-p/y2mate.com%20-%2030%20Contemporary%20Christian%20Songs%20on%20Piano.mp3"
     },
     {
       id: "track2",
-      title: "Ríos de Agua Viva",
-      author: "Guitarra Acústica",
-      duration: "7:05",
-      url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+      title: "Hillsong Worship Piano (2 Horas)",
+      author: "Adoración Instrumental",
+      duration: "2:02:00",
+      url: "https://archive.org/download/y-2mate.com-alone-with-god-3-hour-prayer-time-music-christian-meditation-music-p/y2mate.com%20-%20Hillsong%20%20Two%20Hours%20of%20Worship%20Piano.mp3"
     },
     {
       id: "track3",
-      title: "Paz Perfecta",
-      author: "Orquesta de Cuerdas",
-      duration: "5:44",
-      url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+      title: "Música Instrumental para Orar",
+      author: "Instrumental Worship",
+      duration: "28:40",
+      url: "https://archive.org/download/y-2mate.com-alone-with-god-3-hour-prayer-time-music-christian-meditation-music-p/y2mate.com%20-%20Musica%20instrumental%20para%20orar%20%20Instrumental%20worship%20music%20for%20pray.mp3"
     },
     {
       id: "track4",
-      title: "Sendas de Justicia",
-      author: "Flauta y Arpa",
-      duration: "5:02",
-      url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
+      title: "My Prayer Time (Worship Piano)",
+      author: "Piano Meditativo",
+      duration: "28:40",
+      url: "https://archive.org/download/y-2mate.com-alone-with-god-3-hour-prayer-time-music-christian-meditation-music-p/y2mate.com%20-%20My%20Prayer%20Time%20%20Instrumental%20Prayer%20%20Worship%20Music.mp3"
+    },
+    {
+      id: "track5",
+      title: "Tiempo con el Espíritu Santo",
+      author: "Piano e Instrumental Espontáneo",
+      duration: "43:10",
+      url: "https://archive.org/download/y-2mate.com-alone-with-god-3-hour-prayer-time-music-christian-meditation-music-p/y2mate.com%20-%20PRAY%20Deep%20Prayer%20Music%20%20Peaceful%20Piano%20Instrumental%20%20Time%20With%20Holy%20Spirit%20%20Spontaneous%20Worship.mp3"
     }
   ];
 
